@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: backoffice-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/database
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8081
