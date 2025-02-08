@@ -11,3 +11,18 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+questapi:
+  security:
+    secret-key: "6F9C3D8A7E5B1C46D2F0A3789B4E65CD821F3B07C9D45A6E13F28B07D65C4E9A"
+    expiration: 86400000
+    allowed-origins:
+      - "http://localhost:4373"
+    allowed-methods:
+        - "GET"
+        - "POST"
+        - "PUT"
+        - "DELETE"
+        - "OPTIONS"
+    allowed-headers:
+        - "*"
