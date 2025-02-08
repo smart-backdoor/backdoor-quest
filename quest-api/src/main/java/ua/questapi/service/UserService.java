@@ -15,7 +15,7 @@ public class UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-  UserEntity findByEmail(String email) {
+  public UserEntity findByEmail(String email) {
     return userRepository
         .findByEmail(email)
         .orElseThrow(
