@@ -1,4 +1,4 @@
-package ua.questapi.controller.dto;
+package ua.questapi.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
