@@ -11,6 +11,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 1MB
+      max-file-size: 5MB
 
 questapi:
   security:
