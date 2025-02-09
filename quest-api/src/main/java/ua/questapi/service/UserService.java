@@ -25,14 +25,22 @@ public class UserService {
                     HttpStatus.NOT_FOUND));
   }
 
-  public void createUser(String email, String password) {
-    if (userRepository.existsByEmail(email)) {
+  public UserEntity createUser(String email, String password) {
+    if (existsByEmail(email)) {
       throw new ApplicationException(
           String.format("User with email '%s' already exists.", email), HttpStatus.BAD_REQUEST);
     }
     var userEntity = new UserEntity();
     userEntity.setEmail(email);
     userEntity.setPassword(passwordEncoder.encode(password));
-    userRepository.save(userEntity);
+    return userRepository.save(userEntity);
+  }
+
+  public UserEntity updateUser(UserEntity user) {
+    return userRepository.save(user);
+  }
+
+  public boolean existsByEmail(String email) {
+    return userRepository.existsByEmail(email);
   }
 }
