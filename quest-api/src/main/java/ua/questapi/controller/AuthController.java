@@ -1,5 +1,6 @@
 package ua.questapi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import ua.questapi.controller.dto.request.RegistrationRequestDto;
 import ua.questapi.controller.dto.response.LoginResponseDto;
 import ua.questapi.service.AuthService;
 
+@Tag(name = "Authentication")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

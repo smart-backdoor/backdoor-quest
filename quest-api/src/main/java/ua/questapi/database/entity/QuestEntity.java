@@ -12,8 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Data;
+import org.hibernate.proxy.HibernateProxy;
 
 @Data
 @Entity
@@ -57,9 +59,18 @@ public class QuestEntity {
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
-    if (obj == null || getClass() != obj.getClass()) return false;
+    if (obj == null) return false;
+    Class<?> oEffectiveClass =
+        obj instanceof HibernateProxy
+            ? ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass()
+            : obj.getClass();
+    Class<?> thisEffectiveClass =
+        this instanceof HibernateProxy
+            ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
+            : this.getClass();
+    if (thisEffectiveClass != oEffectiveClass) return false;
     QuestEntity that = (QuestEntity) obj;
-    return id != null && id.equals(that.id);
+    return getId() != null && Objects.equals(getId(), that.getId());
   }
 
   @Override

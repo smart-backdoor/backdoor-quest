@@ -1,11 +1,13 @@
 package ua.questapi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.response.ResultResponseDto;
 import ua.questapi.controller.dto.response.TaskResponseDto;
 import ua.questapi.service.TaskService;
 
+@Tag(name = "Task")
 @RestController
 @RequestMapping("/tasks")
 @RequiredArgsConstructor

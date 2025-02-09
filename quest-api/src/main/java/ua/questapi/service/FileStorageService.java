@@ -42,7 +42,9 @@ public class FileStorageService {
         googleCredentials = GoogleCredentials.fromStream(credentialsStream);
       }
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new ApplicationException(
+          "Error occurred while loading Google Cloud credentials from file: "
+              + properties.getGoogleApplicationCredential());
     }
 
     this.storage =

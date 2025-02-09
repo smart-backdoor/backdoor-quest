@@ -1,5 +1,6 @@
 package ua.questapi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.service.QuestService;
 
+@Tag(name = "Quest")
 @RestController
 @RequestMapping("/quests")
 @RequiredArgsConstructor
