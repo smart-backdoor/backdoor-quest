@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Button } from '@mui/material';
-import { Quiz } from '@types';
+import { MyQuiz, Quiz } from '@types';
 import QuizList from '@modules/profile/components/QuizList';
 
 type ProfileTabsProps = {
   passedQuizzes: Quiz[];
-  myQuizzes: Quiz[];
+  myQuizzes: MyQuiz[];
 };
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({

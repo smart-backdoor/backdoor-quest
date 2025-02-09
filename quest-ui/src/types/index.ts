@@ -25,4 +25,15 @@ export type Quiz = {
   id: string;
   title: string;
   description: string;
+  progress: number;
+  avatar?: string;
+  quizImage?: string;
+  userName: string;
+};
+
+export type MyQuiz = {
+  id: string;
+  title: string;
+  description: string;
+  quizImage?: string;
 };
