@@ -1,6 +1,4 @@
 export const ROUTES = Object.freeze({
-  ALL: '*',
-  AUTH: {
-    LOGIN: '/login',
-  },
+  AUTH: '/auth',
+  PROFILE: '/profile',
 });

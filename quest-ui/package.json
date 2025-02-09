@@ -16,6 +16,7 @@
     "@mui/material": "^6.4.3",
     "@reduxjs/toolkit": "^2.5.1",
     "@types/js-cookie": "^3.0.6",
+    "axios": "^1.7.9",
     "dayjs": "^1.11.13",
     "js-cookie": "^3.0.5",
     "react": "^18.3.1",
@@ -49,7 +50,7 @@
     "prettier": "^3.4.2",
     "typescript": "^5.7.3",
     "vite": "^6.1.0"
-    },
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
