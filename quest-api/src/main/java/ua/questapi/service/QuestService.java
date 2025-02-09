@@ -27,7 +27,11 @@ public class QuestService {
     return questMapper.toResponseDto(savedEntity);
   }
 
-  public QuestEntity findById(Long id) {
+  public QuestResponseDto findById(Long id) {
+    return questMapper.toResponseDto(getById(id));
+  }
+
+  public QuestEntity getById(Long id) {
     return questRepository
         .findById(id)
         .orElseThrow(

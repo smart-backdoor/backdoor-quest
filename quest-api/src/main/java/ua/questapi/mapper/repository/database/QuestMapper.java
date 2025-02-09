@@ -1,10 +1,13 @@
 package ua.questapi.mapper.repository.database;
 
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.database.entity.QuestEntity;
+import ua.questapi.database.entity.TaskEntity;
 import ua.questapi.database.entity.UserEntity;
 
 @Mapper(componentModel = "spring")
@@ -20,5 +23,11 @@ public interface QuestMapper {
   @Mapping(target = "tasks", ignore = true)
   QuestEntity toCreateEntity(QuestRequestDto requestDto, UserEntity user);
 
-  QuestResponseDto toResponseDto(QuestEntity savedEntity);
+  @Mapping(target = "taskIds", source = "entity", qualifiedByName = "getTaskIds")
+  QuestResponseDto toResponseDto(QuestEntity entity);
+
+  @Named("getTaskIds")
+  default List<Long> getTaskIds(QuestEntity entity) {
+    return entity.getTasks().stream().map(TaskEntity::getId).toList();
+  }
 }

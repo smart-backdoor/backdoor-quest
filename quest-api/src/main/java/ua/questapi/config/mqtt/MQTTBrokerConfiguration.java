@@ -1,6 +1,7 @@
 package ua.questapi.config.mqtt;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class MQTTBrokerConfiguration {
@@ -43,13 +45,9 @@ public class MQTTBrokerConfiguration {
             mqttClientFactory(),
             mqttProperties.getTopics().toArray(new String[0]));
     adapter.setOutputChannel(mqttInputChannel());
-    return adapter;
-  }
+    adapter.setQos(mqttProperties.getQos());
 
-  @Bean
-  @ServiceActivator(inputChannel = "mqttInputChannel")
-  public MessageHandler handler() {
-    return message -> System.out.println("Received MQTT message: " + message.getPayload());
+    return adapter;
   }
 
   @Bean

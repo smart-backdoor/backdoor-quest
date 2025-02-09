@@ -1,19 +1,21 @@
 package ua.questapi.model;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import lombok.Getter;
 
-public record QuizSession(String sessionId, Set<String> participants) {
+public record QuizSession(String sessionId, Set<Long> participants) {
+
+  @Getter public static Integer LIMIT = 3;
 
   public QuizSession(String sessionId) {
-    this(sessionId, new HashSet<>());
+    this(sessionId, ConcurrentHashMap.newKeySet());
   }
 
-  public void addParticipant(String userId) {
-    participants.add(userId);
-  }
-
-  public boolean isFull() {
-    return participants.size() >= 3;
+  public boolean addParticipant(Long userId) {
+    if (participants.size() < LIMIT) {
+      return participants.add(userId);
+    }
+    return false;
   }
 }

@@ -32,7 +32,7 @@ questapi:
     allowed-headers:
         - "*"
   mqtt:
-    broker-url: tcp://mqtt-broker:1883
+    broker-url: tcp://localhost:1883
     client-id: quiz-service
     default-topic: quiz/events
     qos: 1
