@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { MyQuiz, Quiz } from '@types';
 import QuizCard from '@modules/profile/components/QuizCard';
 
@@ -8,10 +8,7 @@ type QuizListProps = {
   emptyMessage: string;
 };
 
-const QuizList: React.FC<{
-  quizzes: Quiz[] | MyQuiz[];
-  emptyMessage: string;
-}> = ({ quizzes, emptyMessage }) => {
+const QuizList: React.FC<QuizListProps> = ({ quizzes, emptyMessage }) => {
   return (
     <Box
       sx={{
@@ -19,6 +16,7 @@ const QuizList: React.FC<{
         flexWrap: 'wrap',
         gap: 3,
         justifyContent: 'center',
+        padding: 2,
       }}
     >
       {quizzes?.length > 0 ? (

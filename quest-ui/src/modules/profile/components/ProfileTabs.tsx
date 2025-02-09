@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
 import { MyQuiz, Quiz } from '@types';
 import QuizList from '@modules/profile/components/QuizList';
 
@@ -20,51 +20,40 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 2,
-          mb: 3,
-        }}
-      >
+      <Stack direction="row" justifyContent="center" spacing={4} mb={3}>
         <Button
           onClick={() => handleTabChange(0)}
-          sx={{
-            fontWeight: 'bold',
-            color: tabIndex === 0 ? '#4257b2' : '#2d2d2d',
-            borderBottom: tabIndex === 0 ? '2px solid #4257b2' : 'none',
-            fontSize: '1.2rem',
-          }}
+          sx={tabButtonStyle(tabIndex === 0)}
         >
           Passed Quiz
         </Button>
         <Button
           onClick={() => handleTabChange(1)}
-          sx={{
-            fontWeight: 'bold',
-            color: tabIndex === 1 ? '#4257b2' : '#2d2d2d',
-            borderBottom: tabIndex === 1 ? '2px solid #4257b2' : 'none',
-            fontSize: '1.2rem',
-          }}
+          sx={tabButtonStyle(tabIndex === 1)}
         >
           My Quiz
         </Button>
-      </Box>
+      </Stack>
 
       <Box sx={{ mt: 3 }}>
-        {tabIndex === 0 && (
+        {tabIndex === 0 ? (
           <QuizList
             quizzes={passedQuizzes}
             emptyMessage="No quiz have been passed yet."
           />
-        )}
-        {tabIndex === 1 && (
+        ) : (
           <QuizList quizzes={myQuizzes} emptyMessage="No quiz created yet." />
         )}
       </Box>
     </Box>
   );
 };
+
+const tabButtonStyle = (isActive: boolean) => ({
+  fontWeight: 'bold',
+  color: isActive ? '#4257b2' : '#2d2d2d',
+  borderBottom: isActive ? '2px solid #4257b2' : 'none',
+  fontSize: '1.2rem',
+});
 
 export default ProfileTabs;

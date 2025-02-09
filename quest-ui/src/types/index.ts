@@ -28,7 +28,10 @@ export type Quiz = {
   progress: number;
   avatar?: string;
   quizImage?: string;
-  userName: string;
+  authorName: string;
+  questionCount: number;
+  time: number;
+  category: string;
 };
 
 export type MyQuiz = {

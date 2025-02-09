@@ -22,7 +22,7 @@ const AuthorizationLayout: React.FC = () => {
           background: `url(${Questions})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.5,
+          opacity: 0.4,
           zIndex: 1,
         }}
       />

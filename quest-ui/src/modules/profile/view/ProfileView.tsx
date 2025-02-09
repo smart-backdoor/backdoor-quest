@@ -24,8 +24,13 @@ const ProfileView: React.FC = () => {
   if (!user) return <Typography>Loading...</Typography>;
 
   return (
-    <Box sx={{ padding: 10, zIndex: 3, width: '100%' }}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+    <Box sx={{ padding: 3 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={4}
+      >
         <UserInfo
           name={user.name}
           email={user.email}

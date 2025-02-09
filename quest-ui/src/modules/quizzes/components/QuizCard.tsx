@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { Quiz } from '@types';
 
-const QuizCard: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
+const QuizCard = ({ quiz }: { quiz: Quiz }) => {
   return (
     <Card
       sx={{
@@ -33,7 +33,7 @@ const QuizCard: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
         <CardHeader
           sx={{ padding: 0 }}
           avatar={<Avatar src={quiz?.avatar} alt={quiz?.authorName} />}
-          title={quiz?.title ?? 'Test name'}
+          title={quiz.title ?? 'Test name'}
           subheader={quiz?.authorName ?? 'Author unknown'}
         />
         <CardMedia
@@ -45,21 +45,21 @@ const QuizCard: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
         />
         <CardContent sx={{ padding: 0 }}>
           <Typography variant="body2" color="text.secondary">
-            {quiz?.description}
+            {quiz.description}
           </Typography>
         </CardContent>
         <Stack direction="row" spacing={1}>
-          <Chip label={`${quiz?.questionCount} questions`} color="primary" />
-          <Chip label={`${quiz?.time} min`} color="secondary" />
+          <Chip label={`${quiz.questionCount} questions`} color="primary" />
+          <Chip label={`${quiz.time} min`} color="secondary" />
           <Chip
-            label={quiz?.category ?? 'General'}
+            label={quiz.category}
             variant="outlined"
             sx={{ maxWidth: 150 }}
           />
         </Stack>
         <LinearProgress
           variant="determinate"
-          value={quiz?.progress ?? 0}
+          value={quiz.progress ?? 0}
           sx={{ height: 8, borderRadius: 5 }}
         />
       </Stack>

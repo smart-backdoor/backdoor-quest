@@ -1,14 +1,14 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import ProfileView from '@modules/profile/view/ProfileView';
 import { Questions } from '@assets/images';
 
-const MainLayout: React.FC = () => {
+const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <Box
       sx={{
         display: 'flex',
-        height: '100%',
+        flexDirection: 'column',
+        minHeight: '100vh',
         position: 'relative',
       }}
     >
@@ -19,24 +19,26 @@ const MainLayout: React.FC = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          background: `url(${Questions})`,
+          minHeight: '100vh',
+          backgroundImage: `url(${Questions})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          zIndex: -1,
           opacity: 0.2,
-          zIndex: 1,
         }}
       />
       <Box
         sx={{
           flex: 1,
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
-          zIndex: 2,
         }}
       >
-        <ProfileView />
+        {children}
       </Box>
     </Box>
   );
