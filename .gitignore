@@ -1,1 +1,4 @@
 .idea
+.vscode
+
+quest-ui/node_modules/
