@@ -1,7 +1,10 @@
 package ua.questapi.controller.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -16,4 +19,11 @@ public class QuestRequestDto {
   private String description;
 
   private Long timeLimit;
+
+  private String file;
+
+  @NotNull(message = "Tasks list cannot be null")
+  @Size(min = 1, message = "At least one task is required")
+  @Valid
+  private List<TaskRequestDto> tasks;
 }

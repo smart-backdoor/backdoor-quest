@@ -12,9 +12,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.proxy.HibernateProxy;
 
 @Data
 @Entity
@@ -40,16 +41,40 @@ public class QuestEntity {
   @Column(name = "rate")
   private BigDecimal rate;
 
+  @Column(name = "file")
+  private String file;
+
   @ManyToOne(optional = false)
   @JoinColumn(name = "user_id", nullable = false)
   @JsonIgnore
   private UserEntity user;
 
   @OneToMany(mappedBy = "questEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-  @ToString.Exclude
   private Set<TaskEntity> tasks;
 
   public void incrementTaskCount() {
     this.quantityOfTasks += 1;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    Class<?> oEffectiveClass =
+        obj instanceof HibernateProxy
+            ? ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass()
+            : obj.getClass();
+    Class<?> thisEffectiveClass =
+        this instanceof HibernateProxy
+            ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
+            : this.getClass();
+    if (thisEffectiveClass != oEffectiveClass) return false;
+    QuestEntity that = (QuestEntity) obj;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }

@@ -1,11 +1,13 @@
 package ua.questapi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.response.SessionResponseDto;
 import ua.questapi.service.QuestProgressService;
 import ua.questapi.service.SessionManagerService;
 
+@Tag(name = "Quest Session")
 @RestController
 @RequestMapping("/session")
 @RequiredArgsConstructor

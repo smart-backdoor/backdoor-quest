@@ -17,6 +17,12 @@ spring:
       file-size-threshold: 1MB
       max-file-size: 5MB
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
 questapi:
   security:
     secret-key: "6F9C3D8A7E5B1C46D2F0A3789B4E65CD821F3B07C9D45A6E13F28B07D65C4E9A"
@@ -39,3 +45,8 @@ questapi:
     clean-session: true
     topics:
       - quiz/#
+  cloud-storage:
+    bucket-name: backdoor-unique
+    folder: quest-content
+    google-application-credential: .google/google-auth.json
+    file-size-mb: 5

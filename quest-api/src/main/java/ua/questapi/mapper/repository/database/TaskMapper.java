@@ -13,12 +13,10 @@ public interface TaskMapper {
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "title", source = "requestDto.title")
-  @Mapping(target = "file", source = "file")
+  @Mapping(target = "file", source = "requestDto.file")
   @Mapping(target = "questEntity", ignore = true)
   @Mapping(target = "answers", ignore = true)
-  TaskEntity toCreateEntity(TaskRequestDto requestDto, String file);
+  TaskEntity toCreateEntity(TaskRequestDto requestDto);
 
-  @Mapping(target = "questId", source = "questEntity.id")
-  @Mapping(target = "taskId", source = "id")
   TaskResponseDto toDto(TaskEntity taskEntity);
 }
