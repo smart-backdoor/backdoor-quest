@@ -3,21 +3,21 @@ package ua.questapi.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.response.SessionResponseDto;
-import ua.questapi.service.QuizProgressService;
+import ua.questapi.service.QuestProgressService;
 import ua.questapi.service.SessionManagerService;
 
 @RestController
 @RequestMapping("/session")
 @RequiredArgsConstructor
-public class QuizSessionController {
+public class QuestSessionController {
 
   private final SessionManagerService sessionManagerService;
-  private final QuizProgressService quizProgressService;
+  private final QuestProgressService questProgressService;
 
-  @GetMapping("/{sessionId}/task/{taskId}")
+  @PostMapping("/{sessionId}/quest/{questId}/start")
   public void getTaskForAllUsersInSession(
-      @PathVariable String sessionId, @PathVariable Long taskId) {
-    quizProgressService.getTaskForAllUsers(sessionId, taskId);
+      @PathVariable String sessionId, @PathVariable Long questId) {
+    questProgressService.start(sessionId, questId);
   }
 
   @PostMapping("/create")
