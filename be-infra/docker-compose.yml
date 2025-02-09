@@ -10,3 +10,12 @@ services:
       POSTGRES_DB: database
     ports:
       - "5432:5432"
+
+  mqtt-broker:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt-broker
+    restart: always
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
