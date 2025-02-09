@@ -17,6 +17,8 @@
         <java.version>21</java.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
+        <apache.tike.version>3.1.0</apache.tike.version>
+        <google.cloud.version>2.48.1</google.cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -75,6 +77,17 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-storage</artifactId>
+            <version>${google.cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>${apache.tike.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

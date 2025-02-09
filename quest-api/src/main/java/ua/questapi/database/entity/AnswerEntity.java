@@ -30,4 +30,17 @@ public class AnswerEntity {
   @JoinColumn(name = "task_id", nullable = false)
   @JsonIgnore
   private TaskEntity taskEntity;
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    AnswerEntity that = (AnswerEntity) obj;
+    return id != null && id.equals(that.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
 }

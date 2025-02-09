@@ -11,6 +11,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 10
+        order_inserts: true
+        order_updates: true
+        batch_versioned_data: true
+        use_streams_for_binary: true
   servlet:
     multipart:
       enabled: true
@@ -39,3 +47,8 @@ questapi:
     clean-session: true
     topics:
       - quiz/#
+  cloud-storage:
+    bucket-name: backdoor-unique
+    folder: quest-content
+    google-application-credential: .google/google-auth.json
+    file-size-mb: 5

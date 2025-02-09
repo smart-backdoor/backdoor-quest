@@ -9,8 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskResponseDto {
-  private Long questId;
-  private Long taskId;
+  private Long id;
   private String title;
   private String file;
   private List<AnswerResponseDto> answers;
