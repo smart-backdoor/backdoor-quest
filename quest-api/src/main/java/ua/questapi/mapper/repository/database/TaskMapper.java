@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ua.questapi.controller.dto.request.TaskRequestDto;
 import ua.questapi.controller.dto.response.TaskResponseDto;
+import ua.questapi.controller.dto.response.TaskWithoutCorrectAnswerResponseDto;
 import ua.questapi.database.entity.TaskEntity;
 
 @Mapper(
@@ -17,6 +18,8 @@ public interface TaskMapper {
   @Mapping(target = "questEntity", ignore = true)
   @Mapping(target = "answers", ignore = true)
   TaskEntity toCreateEntity(TaskRequestDto requestDto);
+
+  TaskWithoutCorrectAnswerResponseDto toCurrentTask(TaskResponseDto response);
 
   TaskResponseDto toDto(TaskEntity taskEntity);
 }

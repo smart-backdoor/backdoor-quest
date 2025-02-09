@@ -1,54 +1,77 @@
 package ua.questapi.service;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.questapi.database.entity.TaskEntity;
+import org.springframework.transaction.annotation.Transactional;
+import ua.questapi.controller.dto.request.ValidateAnswerRequestDto;
+import ua.questapi.controller.dto.response.*;
 import ua.questapi.exception.ApplicationException;
 import ua.questapi.mapper.repository.database.TaskMapper;
-import ua.questapi.model.QuizSession;
-import ua.questapi.utils.JsonUtils;
+import ua.questapi.utils.SecurityUtils;
 
 @Service
 @RequiredArgsConstructor
 public class QuestProgressService {
 
-  private final SessionManagerService sessionManagerService;
-  private final MQTTSenderService mqttSenderService;
+  // TODO: migrate to redis or save user progress to db
+  private final Map<Long, List<Boolean>> USER_PROGRESS = new ConcurrentHashMap<>();
+
+  private final UserService userService;
   private final QuestService questService;
+  private final TaskService taskService;
   private final TaskMapper taskMapper;
 
-  // TODO: multi play for 3 users MQTT update every 10 sec
-  public void start(String sessionId, Long questId) {
-    var session = sessionManagerService.getSession(sessionId);
+  @Transactional(readOnly = true)
+  public StartedQuestResponseDto start(Long questId) {
+    var quest = questService.findById(questId);
 
-    var quest = questService.getById(questId);
-    sendTasksForAllUsers(quest.getTasks(), session);
+    var firstTask = taskMapper.toCurrentTask(quest.getTasks().getFirst());
 
-    sessionManagerService.removeSession(sessionId);
+    return new StartedQuestResponseDto(questId, firstTask, quest.getTasks().size());
   }
 
-  private void sendTasksForAllUsers(Set<TaskEntity> tasks, QuizSession session) {
-    tasks.forEach(
-        task -> {
-          session
-              .participants()
-              .forEach(
-                  userId -> {
-                    var topic = "quiz/session/%s/user/%s".formatted(session.sessionId(), userId);
-                    mqttSenderService.publishMqttMessage(
-                        topic, JsonUtils.toJson(taskMapper.toDto(task)));
-                  });
-          sleep();
-        });
-  }
+  @Transactional(readOnly = true)
+  public QuestProgressResponseDto validateAnswerAndGetNext(
+      Long questId, ValidateAnswerRequestDto answerRequestDto) {
+    var task = taskService.getById(answerRequestDto.taskId());
+    var isCorrectAnswer = isCorrectAnswer(task.getAnswers(), answerRequestDto.answerId());
 
-  // TODO: migrate sleep time to configuration of task/quest
-  private void sleep() {
-    try {
-      Thread.sleep(10000);
-    } catch (InterruptedException e) {
-      throw new ApplicationException("Quest pause interrupted");
+    var username = SecurityUtils.getCurrentUser().getUsername();
+    var currentUserId = userService.findByEmail(username).getId();
+
+    USER_PROGRESS.computeIfAbsent(currentUserId, k -> new ArrayList<>()).add(isCorrectAnswer);
+    var results = USER_PROGRESS.get(currentUserId);
+
+    var quest = questService.findById(questId);
+    var isLastTask = answerRequestDto.nextTaskIndex() >= quest.getTasks().size() - 1;
+
+    if (isLastTask) {
+      USER_PROGRESS.remove(currentUserId);
     }
+
+    var nextTask = getNextTaskByIndex(quest.getTasks(), answerRequestDto.nextTaskIndex());
+    return new QuestProgressResponseDto(nextTask, results);
+  }
+
+  private TaskWithoutCorrectAnswerResponseDto getNextTaskByIndex(
+      List<TaskResponseDto> tasks, Integer index) {
+    if (index >= tasks.size())
+      throw new ApplicationException(
+          "Incorrect index for tasks with size %s".formatted(tasks.size()));
+
+    return taskMapper.toCurrentTask(tasks.get(index));
+  }
+
+  private boolean isCorrectAnswer(List<AnswerResponseDto> answers, Long answerId) {
+    return answers.stream()
+        .filter(AnswerResponseDto::getIsCorrect)
+        .findFirst()
+        .map(answer -> Objects.equals(answerId, answer.getId()))
+        .orElse(false);
   }
 }
