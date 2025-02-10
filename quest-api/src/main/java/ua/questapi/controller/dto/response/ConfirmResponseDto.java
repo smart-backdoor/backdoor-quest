@@ -2,13 +2,11 @@ package ua.questapi.controller.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import ua.questapi.enums.TokenType;
 
 @Data
 @AllArgsConstructor
-public class LoginResponseDto {
-  private String token;
+public class ConfirmResponseDto {
   private String email;
-  private Long userId;
-  private String avatar;
-  private String firstName;
+  private TokenType type;
 }
