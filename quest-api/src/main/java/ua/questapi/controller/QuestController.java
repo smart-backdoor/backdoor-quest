@@ -2,10 +2,12 @@ package ua.questapi.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.request.ValidateAnswerRequestDto;
+import ua.questapi.controller.dto.response.QuestGridResponseDto;
 import ua.questapi.controller.dto.response.QuestProgressResponseDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.controller.dto.response.StartedQuestResponseDto;
@@ -40,5 +42,10 @@ public class QuestController {
   public QuestProgressResponseDto next(
       @PathVariable Long questId, @RequestBody @Valid ValidateAnswerRequestDto answerRequestDto) {
     return questProgressService.validateAnswerAndGetNext(questId, answerRequestDto);
+  }
+
+  @GetMapping
+  public List<QuestGridResponseDto> getAllQuests() {
+    return questService.getAll();
   }
 }

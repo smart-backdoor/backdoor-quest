@@ -23,7 +23,7 @@ public class UserController {
 
   @PatchMapping("/profile/{userId}")
   public UserProfileResponseDto updateProfile(
-          @Valid @RequestBody UpdateUserRequestDto request, @PathVariable Long userId) {
+      @Valid @RequestBody UpdateUserRequestDto request, @PathVariable Long userId) {
     return userService.updateProfile(userId, request);
   }
 }

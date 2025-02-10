@@ -1,6 +1,10 @@
 package ua.questapi.service;
 
 import jakarta.validation.Valid;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +21,6 @@ import ua.questapi.database.entity.UserEntity;
 import ua.questapi.database.projection.QuestAverageMarkProjection;
 import ua.questapi.exception.ApplicationException;
 import ua.questapi.mapper.repository.database.UserMapper;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

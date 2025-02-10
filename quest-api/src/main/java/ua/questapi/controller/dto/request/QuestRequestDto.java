@@ -23,7 +23,7 @@ public class QuestRequestDto {
   private String file;
 
   @NotNull(message = "Tasks list cannot be null")
-  @Size(min = 1, message = "At least one task is required")
+  @Size(min = 3, message = "At least 3 tasks is required")
   @Valid
   private List<TaskRequestDto> tasks;
 }

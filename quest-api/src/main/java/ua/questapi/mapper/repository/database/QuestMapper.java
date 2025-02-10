@@ -3,11 +3,12 @@ package ua.questapi.mapper.repository.database;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ua.questapi.controller.dto.request.QuestRequestDto;
+import ua.questapi.controller.dto.response.QuestGridResponseDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.database.entity.QuestEntity;
 import ua.questapi.database.entity.UserEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = UserMapper.class)
 public interface QuestMapper {
 
   @Mapping(target = "id", ignore = true)
@@ -22,4 +23,6 @@ public interface QuestMapper {
   QuestEntity toCreateEntity(QuestRequestDto requestDto, UserEntity user);
 
   QuestResponseDto toResponseDto(QuestEntity entity);
+
+  QuestGridResponseDto toDto(QuestEntity quest);
 }

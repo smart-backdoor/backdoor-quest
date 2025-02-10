@@ -1,11 +1,13 @@
 package ua.questapi.service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.questapi.controller.dto.request.QuestRequestDto;
+import ua.questapi.controller.dto.response.QuestGridResponseDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.database.QuestRepository;
 import ua.questapi.database.entity.QuestEntity;
@@ -61,5 +63,9 @@ public class QuestService {
             () ->
                 new ApplicationException(
                     String.format("Quest with id '%s' was not found.", id), HttpStatus.NOT_FOUND));
+  }
+
+  public List<QuestGridResponseDto> getAll() {
+    return questRepository.findAll().stream().map(questMapper::toDto).toList();
   }
 }

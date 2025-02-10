@@ -1,15 +1,15 @@
 package ua.questapi.mapper.repository.database;
 
+import java.util.List;
 import org.mapstruct.*;
 import ua.questapi.controller.dto.request.UpdateUserRequestDto;
+import ua.questapi.controller.dto.response.UserBriefInfoDto;
 import ua.questapi.controller.dto.response.UserProfileCompletedQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileResponseDto;
 import ua.questapi.database.entity.CompletedQuestsEntity;
 import ua.questapi.database.entity.QuestEntity;
 import ua.questapi.database.entity.UserEntity;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -39,4 +39,6 @@ public interface UserMapper {
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void updateUserFromDto(UpdateUserRequestDto dto, @MappingTarget UserEntity entity);
+
+  UserBriefInfoDto toDto(UserEntity user);
 }
