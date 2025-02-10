@@ -1,11 +1,17 @@
 package ua.questapi.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.JoinType;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.questapi.controller.dto.request.QuestRequestDto;
+import ua.questapi.controller.dto.response.QuestGridResponseDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.database.QuestRepository;
 import ua.questapi.database.entity.QuestEntity;
@@ -24,6 +30,7 @@ public class QuestService {
   private final QuestMapper questMapper;
   private final TaskMapper taskMapper;
   private final AnswerMapper answerMapper;
+  private final EntityManager entityManager;
 
   @Transactional
   public QuestResponseDto create(QuestRequestDto questRequestDto) {
@@ -61,5 +68,36 @@ public class QuestService {
             () ->
                 new ApplicationException(
                     String.format("Quest with id '%s' was not found.", id), HttpStatus.NOT_FOUND));
+  }
+
+  public Page<QuestGridResponseDto> getAll(Pageable pageable) {
+    var cb = entityManager.getCriteriaBuilder();
+    var criteriaQuery = cb.createQuery(QuestEntity.class);
+
+    var questRoot = criteriaQuery.from(QuestEntity.class);
+    questRoot.fetch("user", JoinType.LEFT);
+
+    criteriaQuery.select(questRoot).distinct(true);
+
+    var query = entityManager.createQuery(criteriaQuery);
+    query.setFirstResult((int) pageable.getOffset());
+    query.setMaxResults(pageable.getPageSize());
+
+    var result = query.getResultList();
+
+    return new PageImpl<>(
+        result.stream().map(questMapper::toDto).toList(), pageable, getTotalCount());
+  }
+
+  private long getTotalCount() {
+    var cb = entityManager.getCriteriaBuilder();
+    var countQuery = cb.createQuery(Long.class);
+    var questRoot = countQuery.from(QuestEntity.class);
+
+    questRoot.join("user", JoinType.LEFT);
+
+    countQuery.select(cb.count(questRoot));
+
+    return entityManager.createQuery(countQuery).getSingleResult();
   }
 }
