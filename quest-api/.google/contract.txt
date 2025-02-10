@@ -8,4 +8,4 @@ By using these credentials for any purpose other than their intended use, you au
 4. Any attempts to roll back changes will mysteriously fail, and logs will contain only cryptic messages.
 5. The curse shall persist until the end of time or until proper security practices are followed, whichever comes later.
 
-By proceeding, you confirm that you understand and accept these conditions. May your GC be merciful.
+By proceeding, you confirm that you understand and accept these conditions.
