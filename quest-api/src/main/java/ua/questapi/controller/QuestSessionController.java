@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.response.SessionResponseDto;
-import ua.questapi.service.QuestProgressService;
+import ua.questapi.service.MultiQuestProgressService;
 import ua.questapi.service.SessionManagerService;
 
 @Tag(name = "Quest Session")
@@ -14,7 +14,7 @@ import ua.questapi.service.SessionManagerService;
 public class QuestSessionController {
 
   private final SessionManagerService sessionManagerService;
-  private final QuestProgressService questProgressService;
+  private final MultiQuestProgressService questProgressService;
 
   @PostMapping("/{sessionId}/quest/{questId}/start")
   public void getTaskForAllUsersInSession(
