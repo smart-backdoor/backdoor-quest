@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.request.LoginRequestDto;
 import ua.questapi.controller.dto.request.RegistrationRequestDto;
+import ua.questapi.controller.dto.response.ConfirmResponseDto;
 import ua.questapi.controller.dto.response.LoginResponseDto;
 import ua.questapi.service.AuthService;
 
@@ -23,7 +24,7 @@ public class AuthController {
   }
 
   @PostMapping("/confirm/{token}")
-  public String confirm(@PathVariable String token) {
+  public ConfirmResponseDto confirm(@PathVariable String token) {
     return authService.confirmToken(token);
   }
 
