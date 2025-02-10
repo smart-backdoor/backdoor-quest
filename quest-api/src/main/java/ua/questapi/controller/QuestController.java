@@ -2,11 +2,8 @@ package ua.questapi.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.request.ValidateAnswerRequestDto;
@@ -48,8 +45,7 @@ public class QuestController {
   }
 
   @GetMapping
-  public Page<QuestGridResponseDto> getAllQuests(
-      @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-    return questService.getAll(pageable);
+  public List<QuestGridResponseDto> getAllQuests() {
+    return questService.getAll();
   }
 }
