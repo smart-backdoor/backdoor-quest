@@ -1,6 +1,5 @@
 package ua.questapi.service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,11 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
-import ua.questapi.database.CompletedQuestsRepository;
 import ua.questapi.database.QuestRepository;
-import ua.questapi.database.entity.CompletedQuestsEntity;
 import ua.questapi.database.entity.QuestEntity;
-import ua.questapi.database.projection.QuestAverageMarkProjection;
 import ua.questapi.exception.ApplicationException;
 import ua.questapi.mapper.repository.database.AnswerMapper;
 import ua.questapi.mapper.repository.database.QuestMapper;
@@ -24,7 +20,6 @@ import ua.questapi.utils.SecurityUtils;
 public class QuestService {
 
   private final QuestRepository questRepository;
-  private final CompletedQuestsRepository completedQuestsRepository;
   private final UserService userService;
   private final QuestMapper questMapper;
   private final TaskMapper taskMapper;
@@ -66,17 +61,5 @@ public class QuestService {
             () ->
                 new ApplicationException(
                     String.format("Quest with id '%s' was not found.", id), HttpStatus.NOT_FOUND));
-  }
-
-  public List<QuestEntity> findAllByUserId(Long userId) {
-    return questRepository.findAllByUserId(userId);
-  }
-
-  public List<QuestAverageMarkProjection> findAverageMarks(List<Long> questIds) {
-    return completedQuestsRepository.findAverageMarkByQuestIds(questIds);
-  }
-
-  public List<CompletedQuestsEntity> findAllCompletedByUserId(Long userId) {
-    return completedQuestsRepository.findAllByUserId(userId);
   }
 }

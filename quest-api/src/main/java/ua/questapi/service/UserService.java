@@ -7,7 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.questapi.controller.dto.response.UserProfileQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileResponseDto;
+import ua.questapi.database.CompletedQuestsRepository;
+import ua.questapi.database.QuestRepository;
 import ua.questapi.database.UserRepository;
+import ua.questapi.database.entity.CompletedQuestsEntity;
+import ua.questapi.database.entity.QuestEntity;
 import ua.questapi.database.entity.UserEntity;
 import ua.questapi.database.projection.QuestAverageMarkProjection;
 import ua.questapi.exception.ApplicationException;
@@ -25,7 +29,8 @@ public class UserService {
   private final UserRepository repository;
   private final PasswordEncoder passwordEncoder;
   private final UserMapper mapper;
-  private final QuestService questService;
+  private final QuestRepository questRepository;
+  private final CompletedQuestsRepository completedQuestsRepository;
 
   public UserEntity findByEmail(String email) {
     return repository
@@ -59,16 +64,16 @@ public class UserService {
   public UserProfileResponseDto getProfile(Long userId) {
     var user = findUserById(userId);
 
-    var userQuests = questService.findAllByUserId(userId);
+    var userQuests = findAllByUserId(userId);
     var userQuestDtos = userQuests.stream().map(mapper::toUserProfileQuestResponseDto).toList();
     var createdAverageRate =
         calculateAverageRate(
             userQuestDtos.stream().map(UserProfileQuestResponseDto::getRate).toList());
 
-    var marks = findAverageMarks(userQuestDtos);
+    var marks = getAverageMarks(userQuestDtos);
     var completedAverageMark = calculateAverageRate(marks);
     var completeQuestsDtos =
-        questService.findAllCompletedByUserId(userId).stream()
+        findAllCompletedByUserId(userId).stream()
             .map(mapper::toUserProfileCompletedQuestResponseDto)
             .toList();
 
@@ -78,9 +83,8 @@ public class UserService {
     return response;
   }
 
-  private List<BigDecimal> findAverageMarks(List<UserProfileQuestResponseDto> userQuestDtos) {
-    return questService
-        .findAverageMarks(userQuestDtos.stream().map(UserProfileQuestResponseDto::getId).toList())
+  private List<BigDecimal> getAverageMarks(List<UserProfileQuestResponseDto> userQuestDtos) {
+    return findAverageMarks(userQuestDtos.stream().map(UserProfileQuestResponseDto::getId).toList())
         .stream()
         .map(QuestAverageMarkProjection::getAvgMark)
         .filter(Objects::nonNull)
@@ -110,5 +114,17 @@ public class UserService {
     mapper.updateUserFromDto(request, user);
     repository.save(user);
     return mapper.toUserProfileResponseDto(user);
+  }
+
+  private List<QuestEntity> findAllByUserId(Long userId) {
+    return questRepository.findAllByUserId(userId);
+  }
+
+  private List<QuestAverageMarkProjection> findAverageMarks(List<Long> questIds) {
+    return completedQuestsRepository.findAverageMarkByQuestIds(questIds);
+  }
+
+  private List<CompletedQuestsEntity> findAllCompletedByUserId(Long userId) {
+    return completedQuestsRepository.findAllByUserId(userId);
   }
 }
