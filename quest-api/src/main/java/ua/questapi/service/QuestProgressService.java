@@ -46,15 +46,14 @@ public class QuestProgressService {
 
     USER_PROGRESS.computeIfAbsent(currentUserId, k -> new ArrayList<>()).add(isCorrectAnswer);
     var results = USER_PROGRESS.get(currentUserId);
-
     var quest = questService.findById(questId);
-    var isLastTask = answerRequestDto.nextTaskIndex() >= quest.getTasks().size() - 1;
+
+    var nextTask = getNextTaskByIndex(quest.getTasks(), answerRequestDto.nextTaskIndex());
+    var isLastTask = answerRequestDto.nextTaskIndex() == quest.getTasks().size() - 1;
 
     if (isLastTask) {
       USER_PROGRESS.remove(currentUserId);
     }
-
-    var nextTask = getNextTaskByIndex(quest.getTasks(), answerRequestDto.nextTaskIndex());
     return new QuestProgressResponseDto(nextTask, results);
   }
 
