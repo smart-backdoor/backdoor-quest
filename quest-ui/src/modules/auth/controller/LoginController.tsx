@@ -1,12 +1,12 @@
 import { login, registerUser } from '@api/index';
-import { LoginData, RegisterData } from '@types';
+import { AuthData } from '@types';
 
-export const loginSubmit = async (data: LoginData) => {
+export const loginSubmit = async (data: AuthData) => {
   const response = await login(data);
   return response;
 };
 
-export const registerSubmit = async (data: RegisterData) => {
+export const registerSubmit = async (data: AuthData) => {
   const response = await registerUser(data);
   return response;
 };

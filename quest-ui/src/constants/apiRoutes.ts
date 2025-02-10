@@ -3,4 +3,5 @@ export const API = Object.freeze({
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
   },
+  QUESTS: '/quests',
 });

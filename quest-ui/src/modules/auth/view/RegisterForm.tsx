@@ -5,18 +5,18 @@ import { TextField, Button, Box } from '@mui/material';
 import { toast } from 'react-toastify';
 import { registerSchema } from '@modules/auth/model/validation.model';
 import { registerSubmit } from '@modules/auth/controller/LoginController';
-import { RegisterData } from '@types';
+import { AuthData } from '@types';
 
 const RegisterForm: React.FC = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterData>({
+  } = useForm<AuthData>({
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: RegisterData) => {
+  const onSubmit = async (data: AuthData) => {
     try {
       await registerSubmit(data);
       toast.success('you are successfully registered!');
@@ -27,28 +27,6 @@ const RegisterForm: React.FC = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
-      <Controller
-        name="name"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            fullWidth
-            label="Name"
-            error={!!errors.name}
-            helperText={errors.name?.message}
-            sx={{ mb: 2 }}
-            variant="outlined"
-            InputProps={{
-              sx: {
-                borderRadius: '8px',
-                backgroundColor: 'white',
-              },
-            }}
-          />
-        )}
-      />
       <Controller
         name="email"
         control={control}

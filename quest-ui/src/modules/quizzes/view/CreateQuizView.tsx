@@ -11,13 +11,7 @@ import {
 } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import CreateQuizButton from '@modules/quizzes/components/CreateQuizButton';
-
-const questionTypes = [
-  { value: 'open', label: 'Open answers' },
-  { value: 'test', label: 'Test questions' },
-  { value: 'image', label: 'Question with a picture' },
-];
+import CreateQuizButton from '@components/CreateQuizButton';
 
 const CreateQuizView = () => {
   const [quiz, setQuiz] = useState({
@@ -107,23 +101,6 @@ const CreateQuizView = () => {
 
       {quiz.questions.map((question, index) => (
         <Paper key={index} sx={{ p: 2, mb: 2, borderRadius: 3, boxShadow: 2 }}>
-          <TextField
-            fullWidth
-            select
-            label="Question type"
-            value={question.type}
-            onChange={(e) =>
-              handleQuestionChange(index, 'type', e.target.value)
-            }
-            sx={{ mb: 2, backgroundColor: 'white', borderRadius: 2 }}
-          >
-            {questionTypes.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-
           <TextField
             fullWidth
             label="Question text"

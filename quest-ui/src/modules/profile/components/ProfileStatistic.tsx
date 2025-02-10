@@ -1,6 +1,17 @@
 import React from 'react';
 import { Box, Card, Typography } from '@mui/material';
 
+const cardStyle = {
+  padding: 2,
+  flex: 1,
+  height: 140,
+  justifyContent: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: 'rgba(208, 158, 231, 0.5)',
+  width: 150,
+};
+
 const ProfileStatistics: React.FC = () => {
   return (
     <Box sx={{ marginBottom: 4, textAlign: 'center' }}>
@@ -35,17 +46,6 @@ const ProfileStatistics: React.FC = () => {
       </Box>
     </Box>
   );
-};
-
-const cardStyle = {
-  padding: 2,
-  flex: 1,
-  height: 140,
-  justifyContent: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: 'rgba(208, 158, 231, 0.5)',
-  width: 150,
 };
 
 export default ProfileStatistics;
