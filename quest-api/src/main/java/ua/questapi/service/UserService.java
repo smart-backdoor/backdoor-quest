@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ua.questapi.controller.dto.request.UpdateUserRequestDto;
 import ua.questapi.controller.dto.response.UserProfileQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileResponseDto;
 import ua.questapi.database.CompletedQuestsRepository;
@@ -109,7 +110,7 @@ public class UserService {
                     HttpStatus.NOT_FOUND));
   }
 
-  public UserProfileResponseDto updateProfile(Long userId, @Valid UserProfileResponseDto request) {
+  public UserProfileResponseDto updateProfile(Long userId, @Valid UpdateUserRequestDto request) {
     var user = findUserById(userId);
     mapper.updateUserFromDto(request, user);
     repository.save(user);
