@@ -48,12 +48,11 @@ public class QuestProgressService {
     var results = USER_PROGRESS.get(currentUserId);
     var quest = questService.findById(questId);
 
-    var nextTask = getNextTaskByIndex(quest.getTasks(), answerRequestDto.nextTaskIndex());
-    var isLastTask = answerRequestDto.nextTaskIndex() == quest.getTasks().size() - 1;
-
-    if (isLastTask) {
+    if (answerRequestDto.isLastValidation()) {
       USER_PROGRESS.remove(currentUserId);
+      return QuestProgressResponseDto.lastTask(results);
     }
+    var nextTask = getNextTaskByIndex(quest.getTasks(), answerRequestDto.nextTaskIndex());
     return new QuestProgressResponseDto(nextTask, results);
   }
 
