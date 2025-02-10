@@ -24,8 +24,5 @@ public interface QuestMapper {
 
   QuestResponseDto toResponseDto(QuestEntity entity);
 
-  @Mapping(source = "quantityOfTasks", target = "quantityOfTasks")
-  @Mapping(source = "timeLimit", target = "timeLimit")
-  @Mapping(source = "user", target = "user")
   QuestGridResponseDto toDto(QuestEntity quest);
 }
