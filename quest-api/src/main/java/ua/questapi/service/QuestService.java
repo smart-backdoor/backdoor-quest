@@ -1,8 +1,5 @@
 package ua.questapi.service;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.JoinType;
-import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,11 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.response.QuestGridResponseDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
-import ua.questapi.database.CompletedQuestsRepository;
 import ua.questapi.database.QuestRepository;
-import ua.questapi.database.entity.CompletedQuestsEntity;
 import ua.questapi.database.entity.QuestEntity;
-import ua.questapi.database.projection.QuestAverageMarkProjection;
 import ua.questapi.exception.ApplicationException;
 import ua.questapi.mapper.repository.database.AnswerMapper;
 import ua.questapi.mapper.repository.database.QuestMapper;
@@ -30,7 +24,6 @@ import ua.questapi.utils.SecurityUtils;
 public class QuestService {
 
   private final QuestRepository questRepository;
-  private final CompletedQuestsRepository completedQuestsRepository;
   private final UserService userService;
   private final QuestMapper questMapper;
   private final TaskMapper taskMapper;
