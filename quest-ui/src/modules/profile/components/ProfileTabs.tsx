@@ -8,6 +8,13 @@ type ProfileTabsProps = {
   myQuizzes: MyQuiz[];
 };
 
+const tabButtonStyle = (isActive: boolean) => ({
+  fontWeight: 'bold',
+  color: isActive ? '#4257b2' : '#2d2d2d',
+  borderBottom: isActive ? '2px solid #4257b2' : 'none',
+  fontSize: '1.2rem',
+});
+
 const ProfileTabs: React.FC<ProfileTabsProps> = ({
   passedQuizzes,
   myQuizzes,
@@ -48,12 +55,5 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
     </Box>
   );
 };
-
-const tabButtonStyle = (isActive: boolean) => ({
-  fontWeight: 'bold',
-  color: isActive ? '#4257b2' : '#2d2d2d',
-  borderBottom: isActive ? '2px solid #4257b2' : 'none',
-  fontSize: '1.2rem',
-});
 
 export default ProfileTabs;

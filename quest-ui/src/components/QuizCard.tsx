@@ -7,11 +7,12 @@ import {
   Stack,
   Typography,
   Chip,
-  LinearProgress,
 } from '@mui/material';
-import { Quiz } from '@types';
+import { Quest } from '@types';
 
-const QuizCard: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
+const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
+  const { title, file, description, quantityOfTasks, timeLimit, user } = quiz;
+
   return (
     <Card
       sx={{
@@ -32,36 +33,31 @@ const QuizCard: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
       <Stack spacing={2}>
         <CardHeader
           sx={{ padding: 0 }}
-          avatar={<Avatar src={quiz?.avatar} alt={quiz?.authorName} />}
-          title={quiz?.title ?? 'Test name'}
-          subheader={quiz?.authorName ?? 'Author unknown'}
+          avatar={
+            <Avatar
+              src={user?.avatar}
+              alt={`${user?.firstName} ${user.lastName}`}
+            />
+          }
+          title={title ?? 'Test name'}
+          subheader={`${user?.firstName} ${user.lastName}`}
         />
         <CardMedia
           component="img"
           height="180"
-          image={quiz?.quizImage ?? 'default-image.jpg'}
-          alt={quiz?.title}
+          image={file}
+          alt={title}
           sx={{ borderRadius: 2 }}
         />
         <CardContent sx={{ padding: 0 }}>
           <Typography variant="body2" color="text.secondary">
-            {quiz?.description}
+            {description ?? 'No description available'}
           </Typography>
         </CardContent>
         <Stack direction="row" spacing={1}>
-          <Chip label={`${quiz?.questionCount} questions`} color="primary" />
-          <Chip label={`${quiz?.time} min`} color="secondary" />
-          <Chip
-            label={quiz?.category ?? 'General'}
-            variant="outlined"
-            sx={{ maxWidth: 150 }}
-          />
+          <Chip label={`${quantityOfTasks ?? 0} questions`} color="primary" />
+          <Chip label={`${timeLimit ?? 0} min`} color="secondary" />
         </Stack>
-        <LinearProgress
-          variant="determinate"
-          value={quiz?.progress ?? 0}
-          sx={{ height: 8, borderRadius: 5 }}
-        />
       </Stack>
     </Card>
   );

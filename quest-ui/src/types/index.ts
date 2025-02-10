@@ -6,14 +6,10 @@ export type RegisterResponse = {
   message: string;
 };
 
-export type LoginData = {
+export type AuthData = {
   email: string;
   password: string;
 };
-
-export interface RegisterData extends LoginData {
-  name: string;
-}
 
 export type UserProfile = {
   name: string;
@@ -21,22 +17,37 @@ export type UserProfile = {
   photo: string | null;
 };
 
-export type Quiz = {
+export type PassedQuiz = {
   id: string;
   title: string;
   description: string;
-  progress: number;
-  avatar?: string;
-  quizImage?: string;
-  authorName: string;
-  questionCount: number;
-  time: number;
+  questionsCount: number;
+  correctAnswers: number;
+  image: string;
   category: string;
+  author: {
+    avatar?: string;
+    name: string;
+  };
 };
 
 export type MyQuiz = {
   id: string;
   title: string;
   description: string;
-  quizImage?: string;
+  quizImage: string;
+};
+
+export type Quest = {
+  id: number;
+  title: string;
+  file: string;
+  description: string;
+  quantityOfTasks: number;
+  timeLimit: number;
+  user: {
+    firstName: string;
+    lastName: string;
+    avatar: string;
+  };
 };

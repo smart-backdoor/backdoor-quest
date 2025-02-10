@@ -1,58 +1,55 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, Button } from '@mui/material';
-import QuizCard from '@modules/quizzes/components/QuizCard';
-import QuizFilter from '@modules/quizzes/components/QuizFilter';
+import { Container, Typography, Box } from '@mui/material';
 import { fetchQuizzes } from '@modules/quizzes/controller/QuizController';
-import CreateQuizButton from '@modules/quizzes/components/CreateQuizButton';
+import {
+  boxStyles,
+  quizCardStyles,
+  titleStyles,
+} from '@modules/quizzes/styles';
+import { QuizCard, EmptyQuizCard } from '@components';
 import { ROUTES } from '@constants';
-import { Quiz } from '@types';
+import { Quest } from '@types';
 
 const QuizListView = () => {
   const navigate = useNavigate();
-
-  const handleCreteQuiz = () => {
-    navigate(ROUTES.CREATE_QUIZ);
-  };
-
-  const handleOpenQuiz = (id: string) => {
-    navigate(ROUTES.QUIZ.replace(':id', id));
-  };
-
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [quizzes, setQuizzes] = useState<Quest[]>([]);
 
   useEffect(() => {
     const loadQuizzes = async () => {
-      const data = await fetchQuizzes();
-      setQuizzes(data);
+      try {
+        const data = await fetchQuizzes();
+        setQuizzes(data);
+      } catch (error) {
+        console.error('Failed to fetch quizzes:', error);
+      }
     };
     loadQuizzes();
   }, []);
 
+  const handleCreateQuiz = useCallback(() => {
+    navigate(ROUTES.CREATE_QUIZ);
+  }, [navigate]);
+
+  const handleOpenQuiz = useCallback(
+    (id: number) => {
+      navigate(ROUTES.QUIZ.replace(':id', String(id)));
+    },
+    [navigate]
+  );
+
   return (
-    <Container sx={{ marginTop: 10, textAlign: 'center' }}>
-      <Typography variant="h4" gutterBottom>
+    <Container sx={{ marginY: 10, textAlign: 'center' }}>
+      <Typography gutterBottom sx={titleStyles}>
         Quizzes
       </Typography>
-      <Box>
-        <QuizFilter />
-      </Box>
-      <CreateQuizButton onClick={handleCreteQuiz} />
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: 3,
-        }}
-      >
-        {quizzes.map((quiz) => (
+
+      <Box sx={boxStyles}>
+        <EmptyQuizCard handleCreteQuiz={handleCreateQuiz} />
+        {quizzes?.map((quiz) => (
           <Box
-            key={quiz?.id as string}
-            sx={{
-              width: { xs: '100%', sm: '48%', md: '30%' },
-              cursor: 'pointer',
-            }}
+            key={quiz?.id}
+            sx={quizCardStyles}
             onClick={() => handleOpenQuiz(quiz.id)}
           >
             <QuizCard quiz={quiz} />

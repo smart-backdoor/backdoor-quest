@@ -5,20 +5,19 @@ import { TextField, Button, Box } from '@mui/material';
 import { toast } from 'react-toastify';
 import { loginSchema } from '@modules/auth/model/validation.model';
 import { loginSubmit } from '@modules/auth/controller/LoginController';
-import { LoginData } from '@types';
+import { AuthData } from '@types';
 
 const LoginForm: React.FC = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginData>({
+  } = useForm<AuthData>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginData) => {
+  const onSubmit = async (data: AuthData) => {
     try {
-      //TODO: save token
       const response = await loginSubmit(data);
       toast.success('Successful login!');
     } catch (error) {
