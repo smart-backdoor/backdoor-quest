@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.questapi.controller.dto.request.UpdateUserRequestDto;
 import ua.questapi.controller.dto.response.UserProfileResponseDto;
 import ua.questapi.service.UserService;
 
@@ -22,7 +23,7 @@ public class UserController {
 
   @PatchMapping("/profile/{userId}")
   public UserProfileResponseDto updateProfile(
-      @Valid @RequestBody UserProfileResponseDto request, @PathVariable Long userId) {
+      @Valid @RequestBody UpdateUserRequestDto request, @PathVariable Long userId) {
     return userService.updateProfile(userId, request);
   }
 }

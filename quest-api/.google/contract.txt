@@ -1,0 +1,11 @@
+Request and Contract
+
+By using these credentials for any purpose other than their intended use, you automatically agree to the following terms:
+
+1. You hereby sell your soul to the Devil, irrevocably and without the possibility of appeal.
+2. Your production environment shall be cursed with untraceable memory leaks, appearing at the worst possible moments.
+3. Debugging efforts will lead to random false positives and Heisenbugs, ensuring maximum frustration.
+4. Any attempts to roll back changes will mysteriously fail, and logs will contain only cryptic messages.
+5. The curse shall persist until the end of time or until proper security practices are followed, whichever comes later.
+
+By proceeding, you confirm that you understand and accept these conditions.

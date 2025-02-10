@@ -2,6 +2,7 @@ package ua.questapi.mapper.repository.database;
 
 import java.util.List;
 import org.mapstruct.*;
+import ua.questapi.controller.dto.request.UpdateUserRequestDto;
 import ua.questapi.controller.dto.response.UserBriefInfoDto;
 import ua.questapi.controller.dto.response.UserProfileCompletedQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileQuestResponseDto;
@@ -37,7 +38,7 @@ public interface UserMapper {
       CompletedQuestsEntity entity);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  void updateUserFromDto(UserProfileResponseDto dto, @MappingTarget UserEntity entity);
+  void updateUserFromDto(UpdateUserRequestDto dto, @MappingTarget UserEntity entity);
 
   UserBriefInfoDto toDto(UserEntity user);
 }
