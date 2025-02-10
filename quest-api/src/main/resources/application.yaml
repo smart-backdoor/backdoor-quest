@@ -16,6 +16,14 @@ spring:
       enabled: true
       file-size-threshold: 1MB
       max-file-size: 5MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "no.reply.questapi@gmail.com"
+    password: "osdh elkt pipw dvyy"
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
 springdoc:
   api-docs:
@@ -28,7 +36,7 @@ questapi:
     secret-key: "6F9C3D8A7E5B1C46D2F0A3789B4E65CD821F3B07C9D45A6E13F28B07D65C4E9A"
     expiration: 86400000
     allowed-origins:
-      - "http://localhost:4373"
+      - "http://localhost:3000"
     allowed-methods:
         - "GET"
         - "POST"
@@ -50,3 +58,5 @@ questapi:
     folder: quest-content
     google-application-credential: .google/google-auth.json
     file-size-mb: 5
+  url:
+    ui: http://localhost:3000

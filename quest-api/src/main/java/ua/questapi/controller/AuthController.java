@@ -3,10 +3,7 @@ package ua.questapi.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.questapi.controller.dto.request.LoginRequestDto;
 import ua.questapi.controller.dto.request.RegistrationRequestDto;
 import ua.questapi.controller.dto.response.LoginResponseDto;
@@ -23,6 +20,21 @@ public class AuthController {
   @PostMapping("/register")
   public void register(@Valid @RequestBody RegistrationRequestDto request) {
     authService.register(request);
+  }
+
+  @PostMapping("/confirm/{token}")
+  public String confirm(@PathVariable String token) {
+    return authService.confirmToken(token);
+  }
+
+  @PostMapping("/restore/{email}")
+  public void restore(@PathVariable String email) {
+    authService.restorePassword(email);
+  }
+
+  @PostMapping("/update")
+  public void update(@Valid @RequestBody RegistrationRequestDto requestDto) {
+    authService.updatePassword(requestDto);
   }
 
   @PostMapping("/login")
