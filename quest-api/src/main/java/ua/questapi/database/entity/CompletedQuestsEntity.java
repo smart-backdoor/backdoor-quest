@@ -26,4 +26,7 @@ public class CompletedQuestsEntity {
 
   @Column(name = "mark")
   private BigDecimal mark;
+
+  @Column(name = "rate")
+  private BigDecimal rate;
 }
