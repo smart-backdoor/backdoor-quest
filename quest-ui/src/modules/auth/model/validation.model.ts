@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 const emailSchema = z.string().email('Invalid email');
-const passwordSchema = z.string().min(5, 'The password is weak');
+const passwordSchema = z
+  .string()
+  .min(8, 'Password must contain more than 8 characters');
 
 export const loginSchema = z.object({
   email: emailSchema,
@@ -9,7 +11,6 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  name: z.string().min(1, 'Name is required field'),
   email: emailSchema,
   password: passwordSchema,
 });
