@@ -6,9 +6,10 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import { ROUTES } from './src/constants';
 import Theme from './src/theme';
 import ProfileView from './src/modules/profile/view/ProfileView';
-import QuizListView from './src/modules/quizzes/view/QuizListView';
-import CreateQuizView from './src/modules/quizzes/view/CreateQuizView';
-import QuizPassingView from './src/modules/quizPassing/view/QuizPassingView';
+import QuestGridView from './src/modules/questsGrid/view/QuestGridView';
+import CreateQuestController from './src/modules/questsGrid/controller/CreateQuestController';
+import QuizPassingView from './src/modules/quizPassing/view/QuestPassingView';
+import { ToastContainer } from 'react-toastify';
 
 const App: React.FC = () => {
   return (
@@ -28,7 +29,7 @@ const App: React.FC = () => {
             path={ROUTES.ROOT}
             element={
               <MainLayout>
-                <QuizListView />
+                <QuestGridView />
               </MainLayout>
             }
           />
@@ -36,7 +37,7 @@ const App: React.FC = () => {
             path={ROUTES.CREATE_QUIZ}
             element={
               <MainLayout>
-                <CreateQuizView />
+                <CreateQuestController />
               </MainLayout>
             }
           />
@@ -50,6 +51,7 @@ const App: React.FC = () => {
           />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </ThemeProvider>
   );
 };

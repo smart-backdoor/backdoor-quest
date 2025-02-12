@@ -1,7 +1,9 @@
 export const API = Object.freeze({
   AUTH: {
-    LOGIN: '/auth/login',
-    REGISTER: '/auth/register',
+    LOGIN: 'http://localhost:8080/auth/login',
+    REGISTER: 'http://localhost:8080/auth/register',
   },
-  QUESTS: '/quests',
+  ALL_QUESTS: 'http://localhost:8080/quests',
+  START_QUEST: 'http://localhost:8080/quests/:id/start',
+  VALIDATE_QUEST: 'http://localhost:8080/quests/:id/validate',
 });

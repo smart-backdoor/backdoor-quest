@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { Questions } from '@assets/images';
+import Header from '@layout/MainLayout/components/Header';
 
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -28,6 +29,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           opacity: 0.2,
         }}
       />
+      <Header />
       <Box
         sx={{
           flex: 1,
@@ -36,6 +38,8 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
+          width: '100%',
+          paddingBottom: 5,
         }}
       >
         {children}

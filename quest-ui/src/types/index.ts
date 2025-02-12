@@ -1,3 +1,15 @@
+type Answer = {
+  id: number;
+  title: string;
+};
+
+type Task = {
+  id: number;
+  title: string;
+  file: string;
+  answers: Answer[];
+};
+
 export type LoginResponse = {
   token: string;
 };
@@ -50,4 +62,39 @@ export type Quest = {
     lastName: string;
     avatar: string;
   };
+};
+
+export interface CreateQuizRequest {
+  title: string;
+  description: string;
+  timeLimit: number;
+  file?: File | string;
+  tasks: {
+    title: string;
+    file?: File | string;
+    answers: Answer[];
+  }[];
+}
+
+export interface CreateQuizResponse {
+  id: string;
+  title: string;
+  description: string;
+  timeLimit: number;
+  tasks: {
+    id: string;
+    title: string;
+    answers: Answer[];
+  }[];
+}
+
+export interface StartQuest {
+  questId: number;
+  currentTask: Task;
+  total: number;
+}
+
+export type TaskResponse = {
+  nextTask: Task;
+  correctAnswers: boolean[];
 };

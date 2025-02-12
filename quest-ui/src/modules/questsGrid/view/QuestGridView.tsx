@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Box } from '@mui/material';
-import { fetchQuizzes } from '@modules/quizzes/controller/QuizController';
+import { fetchQuizzes } from '@modules/questsGrid/controller/QuestsGridController';
 import {
   boxStyles,
   quizCardStyles,
   titleStyles,
-} from '@modules/quizzes/styles';
+} from '@modules/questsGrid/styles';
 import { QuizCard, EmptyQuizCard } from '@components';
 import { ROUTES } from '@constants';
 import { Quest } from '@types';
@@ -39,13 +39,15 @@ const QuizListView = () => {
   );
 
   return (
-    <Container sx={{ marginY: 10, textAlign: 'center' }}>
+    <Container sx={{ marginTop: 2, textAlign: 'center' }}>
       <Typography gutterBottom sx={titleStyles}>
-        Quizzes
+        Quests
       </Typography>
 
       <Box sx={boxStyles}>
-        <EmptyQuizCard handleCreteQuiz={handleCreateQuiz} />
+        <Box sx={quizCardStyles}>
+          <EmptyQuizCard handleCreteQuiz={handleCreateQuiz} />
+        </Box>
         {quizzes?.map((quiz) => (
           <Box
             key={quiz?.id}

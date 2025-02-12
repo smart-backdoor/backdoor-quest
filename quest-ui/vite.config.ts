@@ -20,6 +20,7 @@ export default defineConfig({
       '@store': path.resolve(__dirname, './src/store'),
       '@theme': path.resolve(__dirname, './src/theme'),
       '@types': path.resolve(__dirname, './src/types'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
     },
   },
   build: {

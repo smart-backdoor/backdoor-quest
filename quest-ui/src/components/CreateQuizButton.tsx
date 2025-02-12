@@ -1,13 +1,14 @@
 import { Button } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-const CreateQuizButton = ({ onClick }: { onClick: () => void }) => {
+const CreateQuizButton = ({ disabled }: { disabled: boolean }) => {
   return (
     <Button
-      onClick={onClick}
       fullWidth
+      disabled={disabled}
       variant="contained"
       startIcon={<AddCircleOutlineIcon />}
+      type="submit"
       sx={{
         backgroundColor: '#4257b2',
         color: 'white',

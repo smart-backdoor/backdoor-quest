@@ -1,5 +1,7 @@
+import axios, { AxiosResponse } from 'axios';
+import { API } from '@constants';
 import { fetchQuests } from '@api';
-import { Quest } from '@types';
+import { CreateQuizRequest, CreateQuizResponse, Quest } from '@types';
 
 const MOCK_QUIZZES: Quest[] = [
   {
@@ -72,9 +74,28 @@ const MOCK_QUIZZES: Quest[] = [
 export const fetchQuizzes = async (): Promise<Quest[]> => {
   try {
     const quests = await fetchQuests();
-    return MOCK_QUIZZES; //quests.length ? quests : MOCK_QUIZZES
+
+    return Array.isArray(quests) ? quests : MOCK_QUIZZES;
   } catch (error) {
     console.error('Error fetching quests:', error);
     return MOCK_QUIZZES;
+  }
+};
+
+export const createQuiz = async (
+  data: CreateQuizRequest
+): Promise<CreateQuizResponse> => {
+  try {
+    const response: AxiosResponse<CreateQuizResponse> = await axios.post(
+      API.ALL_QUESTS,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Failed to create quiz');
+    }
+    throw new Error('Unknown error');
   }
 };
