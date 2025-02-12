@@ -108,7 +108,7 @@ const QuestPassingView = () => {
     navigate(ROUTES.ROOT);
   };
 
-  const progress = quest ? ((currentTaskIndex + 1) / quest.total) * 100 : 0;
+  const progress = quest ? (currentTaskIndex / quest.total) * 100 : 0;
 
   if (!quest) {
     return <div>Loading...</div>;
@@ -117,7 +117,6 @@ const QuestPassingView = () => {
   return (
     <Modal
       open={isModalOpen}
-      onClose={handleCloseModal}
       sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <Box
@@ -148,14 +147,6 @@ const QuestPassingView = () => {
               sx={{ height: 8, borderRadius: 5, mb: 3 }}
             />
             <Stack direction="row" alignItems="center">
-              <IconButton
-                disableRipple
-                sx={{ mb: '16px', color: '#4257b2' }}
-                onClick={() => setCurrentTaskIndex(currentTaskIndex - 1)}
-                disabled={currentTaskIndex === 0}
-              >
-                <ArrowBackIosIcon />
-              </IconButton>
               <Typography variant="h6" fontWeight="bold" mb={2}>
                 Task {currentTaskIndex + 1} of {quest.total}
               </Typography>
