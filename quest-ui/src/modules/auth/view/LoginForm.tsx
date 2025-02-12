@@ -6,8 +6,12 @@ import { toast } from 'react-toastify';
 import { loginSchema } from '@modules/auth/model/validation.model';
 import { loginSubmit } from '@modules/auth/controller/LoginController';
 import { AuthData } from '@types';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@constants';
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -20,6 +24,7 @@ const LoginForm: React.FC = () => {
     try {
       const response = await loginSubmit(data);
       toast.success('Successful login!');
+      navigate(ROUTES.PROFILE.replace(':id', String(response.data.id)));
     } catch (error) {
       toast.error('Login error. Please check the data.');
     }

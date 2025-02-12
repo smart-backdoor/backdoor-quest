@@ -6,8 +6,12 @@ import { toast } from 'react-toastify';
 import { registerSchema } from '@modules/auth/model/validation.model';
 import { registerSubmit } from '@modules/auth/controller/LoginController';
 import { AuthData } from '@types';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@constants';
 
 const RegisterForm: React.FC = () => {
+  const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -20,6 +24,7 @@ const RegisterForm: React.FC = () => {
     try {
       await registerSubmit(data);
       toast.success('you are successfully registered!');
+      navigate(ROUTES.PROFILE.replace(':id', String(response.data.id)));
     } catch (error) {
       toast.error('Registration error. Please try again.');
     }
