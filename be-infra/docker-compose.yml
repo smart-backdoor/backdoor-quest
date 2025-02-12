@@ -18,15 +18,6 @@ services:
     volumes:
       - ./mosquitto/config:/mosquitto/config
 
-  smtp:
-    image: mailhog/mailhog
-    container_name: smtp
-    restart: always
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-
-
   questapi-app:
     build:
       context: ../quest-api
@@ -35,7 +26,6 @@ services:
     depends_on:
       - postgres
       - mqtt-broker
-      - smtp
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/database
       SPRING_DATASOURCE_USERNAME: admin
@@ -44,3 +34,13 @@ services:
       QUESTAPI_MQTT_BROKER_URL: tcp://mqtt-broker:1883
     ports:
       - "8080:8080"
+
+  quest-ui:
+    build:
+      context: ../quest-ui
+      dockerfile: Dockerfile
+    container_name: quest-ui
+    depends_on:
+      - questapi-app
+    ports:
+      - "3000:80"
