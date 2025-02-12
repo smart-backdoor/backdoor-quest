@@ -5,12 +5,14 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.questapi.controller.dto.request.CompleteQuestRequestDto;
 import ua.questapi.controller.dto.request.QuestRequestDto;
 import ua.questapi.controller.dto.request.ValidateAnswerRequestDto;
 import ua.questapi.controller.dto.response.QuestGridResponseDto;
 import ua.questapi.controller.dto.response.QuestProgressResponseDto;
 import ua.questapi.controller.dto.response.QuestResponseDto;
 import ua.questapi.controller.dto.response.StartedQuestResponseDto;
+import ua.questapi.service.CompletedQuestService;
 import ua.questapi.service.QuestProgressService;
 import ua.questapi.service.QuestService;
 
@@ -22,6 +24,7 @@ public class QuestController {
 
   private final QuestService questService;
   private final QuestProgressService questProgressService;
+  private final CompletedQuestService completedQuestService;
 
   @PostMapping
   public QuestResponseDto create(@Valid @RequestBody QuestRequestDto request) {
@@ -47,5 +50,12 @@ public class QuestController {
   @GetMapping
   public List<QuestGridResponseDto> getAllQuests() {
     return questService.getAll();
+  }
+
+  @PostMapping("/{questId}/complete")
+  public void complete(
+      @PathVariable Long questId,
+      @RequestBody @Valid CompleteQuestRequestDto completeQuestRequestDto) {
+    completedQuestService.completeQuest(questId, completeQuestRequestDto);
   }
 }

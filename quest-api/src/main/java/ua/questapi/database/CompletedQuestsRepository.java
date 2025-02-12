@@ -1,10 +1,12 @@
 package ua.questapi.database;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ua.questapi.database.entity.CompletedQuestsEntity;
+import ua.questapi.database.entity.QuestEntity;
 import ua.questapi.database.projection.QuestAverageMarkProjection;
 
 public interface CompletedQuestsRepository extends JpaRepository<CompletedQuestsEntity, Long> {
@@ -22,4 +24,7 @@ public interface CompletedQuestsRepository extends JpaRepository<CompletedQuests
       @Param("questIds") List<Long> questIds);
 
   List<CompletedQuestsEntity> findAllByUserId(Long userId);
+
+  @Query("SELECT cq.rate FROM CompletedQuestsEntity cq WHERE cq.questEntity = :quest")
+  List<BigDecimal> findAllRatesByQuest(@Param("quest") QuestEntity quest);
 }

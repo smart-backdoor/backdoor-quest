@@ -16,7 +16,6 @@ public interface QuestMapper {
   @Mapping(target = "description", source = "requestDto.description")
   @Mapping(target = "quantityOfTasks", constant = "0L")
   @Mapping(target = "timeLimit", source = "requestDto.timeLimit")
-  @Mapping(target = "rate", ignore = true)
   @Mapping(target = "file", source = "requestDto.file")
   @Mapping(target = "user", source = "user")
   @Mapping(target = "tasks", ignore = true)
