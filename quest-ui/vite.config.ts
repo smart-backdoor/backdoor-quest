@@ -32,7 +32,6 @@ export default defineConfig({
           mui: ['@mui/material'],
           'react-dropzone': ['react-dropzone'],
           'react-hook-form': ['react-hook-form'],
-          'react-json-pretty': ['react-json-pretty'],
           'react-window': ['react-window'],
           zod: ['zod'],
         },
