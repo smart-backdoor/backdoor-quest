@@ -24,7 +24,7 @@ const LoginForm: React.FC = () => {
     try {
       const response = await loginSubmit(data);
       toast.success('Successful login!');
-      navigate(ROUTES.PROFILE.replace(':id', String(response.data.id)));
+      navigate(ROUTES.PROFILE.replace(':id', String(response.data.userId)));
     } catch (error) {
       toast.error('Login error. Please check the data.');
     }

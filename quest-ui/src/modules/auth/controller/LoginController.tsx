@@ -11,7 +11,7 @@ export const loginSubmit = async (data: AuthData) => {
     Cookies.set('token', response.data.token, { expires: 7 });
 
     const navigate = useNavigate();
-    navigate(ROUTES.PROFILE.replace(':id', String(response.data.id)));
+    navigate(ROUTES.PROFILE.replace(':id', String(response.data.userId)));
   }
 
   return response;
