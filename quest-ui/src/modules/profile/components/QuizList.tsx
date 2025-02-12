@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { MyQuiz, Quiz } from '@types';
-import QuizCard from '@components/QuizCard';
+import { Quest } from '@types';
+import QuizCard from '@modules/profile/components/QuizCard';
 
 type QuizListProps = {
-  quizzes: Quiz[] | MyQuiz[];
+  quizzes: Quest[];
   emptyMessage: string;
 };
 

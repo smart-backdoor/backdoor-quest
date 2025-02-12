@@ -12,7 +12,7 @@ const cardStyle = {
   width: 150,
 };
 
-const ProfileStatistics: React.FC = () => {
+const ProfileStatistics: React.FC = ({ userData }) => {
   return (
     <Box sx={{ marginBottom: 4, textAlign: 'center' }}>
       <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -21,26 +21,26 @@ const ProfileStatistics: React.FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
         <Card sx={cardStyle}>
           <Typography sx={{ fontWeight: '600', fontSize: '1rem' }}>
-            Quests Completed
+            Completed Average Mark
           </Typography>
           <Typography variant="h4" fontWeight="bold">
-            24
+            {userData.completedAverageMark}
           </Typography>
         </Card>
         <Card sx={cardStyle}>
           <Typography sx={{ fontWeight: '600', fontSize: '1rem' }}>
-            Total Points
+            Created Average Rate
           </Typography>
           <Typography variant="h4" fontWeight="bold">
-            1500
+            {userData.createdAverageRate}
           </Typography>
         </Card>
         <Card sx={cardStyle}>
           <Typography sx={{ fontWeight: '600', fontSize: '1rem' }}>
-            Rank
+            Passed Quizzes
           </Typography>
           <Typography variant="h4" fontWeight="bold">
-            #12
+            {userData.passedQuizzes.length}
           </Typography>
         </Card>
       </Box>

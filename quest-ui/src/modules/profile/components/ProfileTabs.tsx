@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import { MyQuiz, Quiz } from '@types';
+import { MyQuiz, Quest } from '@types';
 import QuizList from '@modules/profile/components/QuizList';
 
 type ProfileTabsProps = {
-  passedQuizzes: Quiz[];
+  passedQuizzes: Quest[];
   myQuizzes: MyQuiz[];
 };
 
@@ -26,7 +26,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
   };
 
   return (
-    <Box>
+    <Box sx={{ marginTop: 10 }}>
       <Stack direction="row" justifyContent="center" spacing={4} mb={3}>
         <Button
           onClick={() => handleTabChange(0)}

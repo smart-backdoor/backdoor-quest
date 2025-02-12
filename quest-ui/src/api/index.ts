@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import Cookies from 'js-cookie';
 import { API } from '@constants';
 import {
   AuthData,
@@ -7,15 +8,29 @@ import {
   RegisterResponse,
   StartQuest,
   TaskResponse,
+  User,
 } from '@types';
 
-export const login = async (data: AuthData): Promise<LoginResponse> => {
+const getTokenFromCookies = () => {
+  return Cookies.get('token');
+};
+
+axios.interceptors.request.use((config) => {
+  const token = getTokenFromCookies();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export const login = async (data: AuthData) => {
   try {
     const response: AxiosResponse<LoginResponse> = await axios.post(
       API.AUTH.LOGIN,
       data
     );
-    return response.data;
+
+    return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message);
@@ -24,15 +39,13 @@ export const login = async (data: AuthData): Promise<LoginResponse> => {
   }
 };
 
-export const registerUser = async (
-  data: AuthData
-): Promise<RegisterResponse> => {
+export const registerUser = async (data: AuthData) => {
   try {
     const response: AxiosResponse<RegisterResponse> = await axios.post(
       API.AUTH.REGISTER,
       data
     );
-    return response.data;
+    return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message);
@@ -77,6 +90,22 @@ export const submitTaskAnswer = async (
     const response: AxiosResponse<TaskResponse> = await axios.post(
       API.VALIDATE_QUEST.replace(':id', id),
       payload
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || 'Error fetching start quest'
+      );
+    }
+    throw new Error('Unknown error');
+  }
+};
+
+export const getUserProfile = async (id: string): Promise<User> => {
+  try {
+    const response: AxiosResponse<User> = await axios.get(
+      API.USER.replace(':id', id)
     );
     return response.data;
   } catch (error) {

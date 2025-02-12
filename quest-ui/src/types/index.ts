@@ -98,3 +98,34 @@ export type TaskResponse = {
   nextTask: Task;
   correctAnswers: boolean[];
 };
+
+interface CompletedQuest {
+  id: number;
+  title: string;
+  mark: number | null;
+  quantityOfTasks: number;
+  file: string;
+  authorName: string | null;
+  authorAvatar: string | null;
+}
+
+interface CreatedQuest {
+  id: number;
+  title: string;
+  description: string;
+  rate: number;
+  file: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  avatar: string | null;
+  enabled: boolean;
+  completed: CompletedQuest[];
+  completedAverageMark: number;
+  created: CreatedQuest[];
+  createdAverageRate: number;
+}
