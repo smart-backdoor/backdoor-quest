@@ -56,7 +56,7 @@ questapi:
   cloud-storage:
     bucket-name: backdoor-unique
     folder: quest-content
-    google-application-credential: google-auth.json
+    google-application-credential: .google/google-auth.json
     file-size-mb: 5
   url:
     ui: http://localhost:3000
