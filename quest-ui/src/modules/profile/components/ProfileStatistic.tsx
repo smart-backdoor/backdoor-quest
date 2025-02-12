@@ -40,7 +40,7 @@ const ProfileStatistics: React.FC = ({ userData }) => {
             Passed Quizzes
           </Typography>
           <Typography variant="h4" fontWeight="bold">
-            {userData.passedQuizzes.length}
+            {userData.completed.length}
           </Typography>
         </Card>
       </Box>

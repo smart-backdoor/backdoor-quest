@@ -10,15 +10,17 @@ import QuestGridView from './src/modules/questsGrid/view/QuestGridView';
 import CreateQuestController from './src/modules/questsGrid/controller/CreateQuestController';
 import QuizPassingView from './src/modules/quizPassing/view/QuestPassingView';
 import { ToastContainer } from 'react-toastify';
+import Cookies from "js-cookie";
 
 const App: React.FC = () => {
+
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
         <Routes>
           <Route path={ROUTES.AUTH} element={<AuthorizationLayout />} />
           <Route
-            path={ROUTES.PROFILE}
+            path={ROUTES.PROFILE.replace(':id', String(Cookies.get('userId')))}
             element={
               <MainLayout>
                 <ProfileView />

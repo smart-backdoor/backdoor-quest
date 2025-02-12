@@ -12,7 +12,7 @@ export const fetchQuestions = async (questId: string) => {
 
 export const submitQuestion = async (
   questId: string,
-  payload: { taskId: number; answerId: number }
+  payload: { taskId: number; answerId: number; questId: number }
 ) => {
   try {
     const data = await submitTaskAnswer(questId, payload);

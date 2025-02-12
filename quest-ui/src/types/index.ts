@@ -12,10 +12,15 @@ type Task = {
 
 export type LoginResponse = {
   token: string;
+  userId: number;
+  email: string;
+  avatar: string;
+  firstName: string;
 };
 
 export type RegisterResponse = {
   message: string;
+  userId: number;
 };
 
 export type AuthData = {

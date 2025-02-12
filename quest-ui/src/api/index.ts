@@ -117,3 +117,23 @@ export const getUserProfile = async (id: string): Promise<User> => {
     throw new Error('Unknown error');
   }
 };
+
+export const onQuestComplete = async (
+  id: string,
+  payload: { correctAnswers: boolean[]; rate: number }
+) => {
+  try {
+    const response: AxiosResponse<User> = await axios.post(
+      API.QUEST_COMPLETE.replace(':id', id),
+      payload
+    );
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || 'Error fetching start quest'
+      );
+    }
+    throw new Error('Unknown error');
+  }
+};
