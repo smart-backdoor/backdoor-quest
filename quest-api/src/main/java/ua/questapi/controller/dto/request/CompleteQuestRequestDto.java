@@ -1,5 +1,6 @@
 package ua.questapi.controller.dto.request;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -15,6 +16,7 @@ public class CompleteQuestRequestDto {
   List<Boolean> correctAnswers;
 
   @NotNull(message = "Rate is required")
-  @Min(1)
+  @Min(value = 1, message = "Min 1 and max 5")
+  @Max(value = 5, message = "Min 1 and max 5")
   Integer rate;
 }
