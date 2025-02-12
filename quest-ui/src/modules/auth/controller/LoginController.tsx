@@ -26,9 +26,6 @@ export const registerSubmit = async (data: AuthData) => {
 
       if (loginResponse.data.token) {
         Cookies.set('token', loginResponse.data.token, { expires: 7 });
-
-        const navigate = useNavigate();
-        navigate(ROUTES.PROFILE.replace(':id', String(response.data.id)));
       }
 
       return loginResponse;
