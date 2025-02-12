@@ -9,6 +9,7 @@ export const loginSubmit = async (data: AuthData) => {
 
   if (response.data.token) {
     Cookies.set('token', response.data.token, { expires: 7 });
+    Cookies.set('userId', response.data.userId, { expires: 7 });
 
     const navigate = useNavigate();
     navigate(ROUTES.PROFILE.replace(':id', String(response.data.userId)));
@@ -26,6 +27,7 @@ export const registerSubmit = async (data: AuthData) => {
 
       if (loginResponse.data.token) {
         Cookies.set('token', loginResponse.data.token, { expires: 7 });
+        Cookies.set('userId', loginResponse.data.userId, { expires: 7 });
       }
 
       return loginResponse;
