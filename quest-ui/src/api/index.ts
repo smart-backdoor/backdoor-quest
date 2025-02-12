@@ -68,7 +68,7 @@ export const fetchQuests = async (): Promise<Quest[]> => {
 
 export const startQuest = async (id: string): Promise<StartQuest> => {
   try {
-    const response: AxiosResponse<StartQuest> = await axios.get(
+    const response: AxiosResponse<StartQuest> = await axios.post(
       API.START_QUEST.replace(':id', id)
     );
     return response.data;
