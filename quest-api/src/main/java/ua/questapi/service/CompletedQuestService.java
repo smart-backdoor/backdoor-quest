@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.questapi.controller.dto.request.CompleteQuestRequestDto;
 import ua.questapi.database.CompletedQuestsRepository;
+import ua.questapi.database.entity.CompletedQuestsEntity;
 import ua.questapi.mapper.repository.database.CompletedQuestMapper;
 import ua.questapi.utils.SecurityUtils;
 
@@ -38,9 +39,23 @@ public class CompletedQuestService {
 
     var userRate = BigDecimal.valueOf(completeQuestRequestDto.getRate());
 
-    var entity = completedQuestMapper.toEntity(user, quest, userMark, userRate);
+    var existingRecordOptional =
+        completedQuestsRepository.findByUserIdAndQuestId(user.getId(), quest.getId());
 
     var allQuestRates = completedQuestsRepository.findAllRatesByQuest(quest);
+
+    existingRecordOptional.map(CompletedQuestsEntity::getRate).ifPresent(allQuestRates::remove);
+
+    var completedQuest =
+        existingRecordOptional
+            .map(
+                existingRecord -> {
+                  existingRecord.setMark(userMark);
+                  existingRecord.setRate(userRate);
+                  return existingRecord;
+                })
+            .orElseGet(() -> completedQuestMapper.toEntity(user, quest, userMark, userRate));
+
     allQuestRates.add(userRate);
 
     var sumOfRates = allQuestRates.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -52,8 +67,9 @@ public class CompletedQuestService {
             : userRate;
 
     quest.setRate(averageRate);
-    entity.setQuestEntity(quest);
+    completedQuest.setQuestEntity(quest);
+    completedQuest.setUser(user);
 
-    completedQuestsRepository.save(entity);
+    completedQuestsRepository.save(completedQuest);
   }
 }
