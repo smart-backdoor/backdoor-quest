@@ -22,10 +22,10 @@ const RegisterForm: React.FC = () => {
 
   const onSubmit = async (data: AuthData) => {
     try {
-      const response = await registerSubmit(data);
+      await registerSubmit(data);
 
       toast.success('you are successfully registered!');
-      navigate(ROUTES.PROFILE.replace(':id', String(response.data.userId)));
+      navigate(ROUTES.ROOT);
     } catch (error) {
       toast.error('Registration error. Please try again.');
     }
