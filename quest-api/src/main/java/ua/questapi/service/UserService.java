@@ -1,15 +1,12 @@
 package ua.questapi.service;
 
 import jakarta.validation.Valid;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.questapi.controller.dto.request.UpdateUserRequestDto;
+import ua.questapi.controller.dto.response.UserProfileCompletedQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileQuestResponseDto;
 import ua.questapi.controller.dto.response.UserProfileResponseDto;
 import ua.questapi.database.CompletedQuestsRepository;
@@ -21,6 +18,10 @@ import ua.questapi.database.entity.UserEntity;
 import ua.questapi.database.projection.QuestAverageMarkProjection;
 import ua.questapi.exception.ApplicationException;
 import ua.questapi.mapper.repository.database.UserMapper;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -71,12 +72,12 @@ public class UserService {
         calculateAverageRate(
             userQuestDtos.stream().map(UserProfileQuestResponseDto::getRate).toList());
 
-    var marks = getAverageMarks(userQuestDtos);
-    var completedAverageMark = calculateAverageRate(marks);
     var completeQuestsDtos =
         findAllCompletedByUserId(userId).stream()
             .map(mapper::toUserProfileCompletedQuestResponseDto)
             .toList();
+    var marks = getAverageMarks(completeQuestsDtos);
+    var completedAverageMark = calculateAverageRate(marks);
 
     var response = mapper.toUserProfileResponseDto(user, userQuestDtos, completeQuestsDtos);
     response.setCreatedAverageRate(createdAverageRate);
@@ -84,12 +85,9 @@ public class UserService {
     return response;
   }
 
-  private List<BigDecimal> getAverageMarks(List<UserProfileQuestResponseDto> userQuestDtos) {
-    return findAverageMarks(userQuestDtos.stream().map(UserProfileQuestResponseDto::getId).toList())
-        .stream()
-        .map(QuestAverageMarkProjection::getAvgMark)
-        .filter(Objects::nonNull)
-        .toList();
+  private List<BigDecimal> getAverageMarks(
+      List<UserProfileCompletedQuestResponseDto> userQuestDtos) {
+    return userQuestDtos.stream().map(UserProfileCompletedQuestResponseDto::getMark).toList();
   }
 
   private BigDecimal calculateAverageRate(List<BigDecimal> rates) {

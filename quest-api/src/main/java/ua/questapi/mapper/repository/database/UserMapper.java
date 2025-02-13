@@ -27,7 +27,7 @@ public interface UserMapper {
 
   UserProfileQuestResponseDto toUserProfileQuestResponseDto(QuestEntity entity);
 
-  @Mapping(target = "id", source = "id")
+  @Mapping(target = "id", source = "questEntity.id")
   @Mapping(target = "mark", source = "mark")
   @Mapping(target = "title", source = "questEntity.title")
   @Mapping(target = "quantityOfTasks", source = "questEntity.quantityOfTasks")

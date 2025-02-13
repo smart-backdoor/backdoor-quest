@@ -1,8 +1,7 @@
 package ua.questapi.controller.dto.response;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Data
 public class UserProfileQuestResponseDto {
