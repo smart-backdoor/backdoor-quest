@@ -11,7 +11,8 @@ import {
 import { Quest } from '@types';
 
 const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
-  const { title, mark, quantityOfTasks, file, authorName, authorAvatar } = quiz;
+  const { title, mark, quantityOfTasks, file, authorName, authorAvatar, rate } =
+    quiz;
 
   return (
     <Card
@@ -47,7 +48,7 @@ const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
 
         <Stack direction="row" spacing={1}>
           <Chip label={`${quantityOfTasks ?? 0} questions`} color="primary" />
-          <Chip label={`mark: ${mark}`} color="secondary" />
+          <Chip label={`mark: ${mark ?? rate}`} color="secondary" />
         </Stack>
       </Stack>
     </Card>
