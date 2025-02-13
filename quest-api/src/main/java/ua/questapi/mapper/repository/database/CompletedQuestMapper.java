@@ -11,6 +11,7 @@ import ua.questapi.database.entity.UserEntity;
 public interface CompletedQuestMapper {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "rate", source = "rate")
   @Mapping(target = "user", source = "userEntity")
   CompletedQuestsEntity toEntity(
       UserEntity userEntity, QuestEntity questEntity, BigDecimal mark, BigDecimal rate);
