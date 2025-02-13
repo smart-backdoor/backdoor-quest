@@ -2,6 +2,7 @@ package ua.questapi.database;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,8 @@ public interface CompletedQuestsRepository extends JpaRepository<CompletedQuests
 
   @Query("SELECT cq.rate FROM CompletedQuestsEntity cq WHERE cq.questEntity = :quest")
   List<BigDecimal> findAllRatesByQuest(@Param("quest") QuestEntity quest);
+
+  @Query(
+      "SELECT cq FROM CompletedQuestsEntity cq WHERE cq.user.id = :userId AND cq.questEntity.id = :questId")
+  Optional<CompletedQuestsEntity> findByUserIdAndQuestId(Long userId, Long questId);
 }

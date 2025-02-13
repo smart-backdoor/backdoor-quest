@@ -1,7 +1,8 @@
 package ua.questapi.controller.dto.response;
 
-import java.math.BigDecimal;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 public class UserProfileQuestResponseDto {
@@ -10,4 +11,5 @@ public class UserProfileQuestResponseDto {
   private String description;
   private BigDecimal rate;
   private String file;
+  private Long quantityOfTasks;
 }
