@@ -1,6 +1,7 @@
 import { getUserProfile } from '@api';
 import { FunnyCat } from '@assets/images';
 import { User } from '@types';
+import Cookies from "js-cookie";
 
 const fallbackData: User = {
   id: 1,
@@ -145,7 +146,7 @@ const fallbackData: User = {
 
 export const getProfile = async () => {
   try {
-    const data = await getUserProfile('1');
+    const data = await getUserProfile(String(Cookies.get('userId')));
 
     return data ?? fallbackData;
   } catch (error) {

@@ -3,10 +3,11 @@ import { Box } from '@mui/material';
 import { ExitToApp, ListAlt, Person } from '@mui/icons-material';
 import { Logo, Text } from '@assets/images';
 import NavItem from '@layout/MainLayout/components/NavItem';
+import Cookies from "js-cookie";
+import {ROUTES} from "@constants";
 
 const Header: React.FC = () => {
-  const isAuthenticated = Boolean(localStorage.getItem('token'));
-
+  const userId = String(Cookies.get('userId'));
   return (
     <Box
       sx={{
@@ -29,12 +30,12 @@ const Header: React.FC = () => {
           icon={<ListAlt />}
           active={location.pathname === '/'}
         />
-        {isAuthenticated ? (
+        {userId ? (
           <NavItem
-            to="/profile/1"
+            to= {ROUTES.PROFILE.replace(':id', userId)}
             label="Profile"
             icon={<Person />}
-            active={location.pathname === '/profile/1'}
+            active={location.pathname === ROUTES.PROFILE.replace(':id', userId)}
           />
         ) : (
           <NavItem
