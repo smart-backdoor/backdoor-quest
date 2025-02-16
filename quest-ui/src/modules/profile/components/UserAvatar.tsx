@@ -1,19 +1,18 @@
-import React from 'react';
 import { Avatar, Typography } from '@mui/material';
 
 type UserAvatarProps = {
-  photo: string | null;
+  avatar: string | null;
   onUpload: (file: File) => void;
 };
 
-const UserAvatar: React.FC<UserAvatarProps> = ({ photo, onUpload }) => {
+const UserAvatar: React.FC<UserAvatarProps> = ({ avatar, onUpload }) => {
   return (
     <Avatar
-      src={photo ?? undefined}
+      src={avatar ?? undefined}
       sx={{
         width: 120,
         height: 120,
-        backgroundColor: photo ? 'transparent' : '#f0f0f0',
+        backgroundColor: avatar ? 'transparent' : '#f0f0f0',
         border: '2px dashed #ccc',
         cursor: 'pointer',
         '&:hover': {
@@ -31,7 +30,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ photo, onUpload }) => {
         input.click();
       }}
     >
-      {!photo && (
+      {!avatar && (
         <Typography variant="h4" sx={{ color: '#666' }}>
           +
         </Typography>

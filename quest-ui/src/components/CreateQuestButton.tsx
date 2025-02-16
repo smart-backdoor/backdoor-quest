@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-const CreateQuizButton = ({ disabled }: { disabled: boolean }) => {
+const CreateQuestButton = ({ disabled }: { disabled: boolean }) => {
   return (
     <Button
       fullWidth
@@ -13,10 +13,9 @@ const CreateQuizButton = ({ disabled }: { disabled: boolean }) => {
         backgroundColor: '#4257b2',
         color: 'white',
         fontWeight: 'bold',
-        maxWidth: 300,
-        fontSize: '18px',
-        padding: '12px',
-        borderRadius: '10px',
+        fontSize: '1.1rem',
+        padding: '0.75rem',
+        borderRadius: '0.7rem',
         textTransform: 'none',
         transition: 'background-color 0.3s',
         marginBottom: 5,
@@ -24,13 +23,13 @@ const CreateQuizButton = ({ disabled }: { disabled: boolean }) => {
           backgroundColor: '#9370db',
         },
         '& .MuiSvgIcon-root': {
-          fontSize: '24px',
+          fontSize: '1.6rem',
         },
       }}
     >
-      Create Quiz
+      Create Quest
     </Button>
   );
 };
 
-export default CreateQuizButton;
+export default CreateQuestButton;

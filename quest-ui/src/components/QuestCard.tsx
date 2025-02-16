@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import { Quest } from '@types';
 
-const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
-  const { title, file, description, quantityOfTasks, timeLimit, user } = quiz;
+const QuestCard: React.FC<{ quest: Quest }> = ({ quest }) => {
+  const { title, file, description, quantityOfTasks, timeLimit, user } = quest;
 
   return (
     <Card
@@ -63,4 +63,4 @@ const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
   );
 };
 
-export default QuizCard;
+export default QuestCard;

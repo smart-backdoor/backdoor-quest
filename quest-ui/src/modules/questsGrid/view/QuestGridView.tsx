@@ -1,39 +1,40 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Box } from '@mui/material';
-import { fetchQuizzes } from '@modules/questsGrid/controller/QuestsGridController';
 import {
   boxStyles,
-  quizCardStyles,
+  questCardStyles,
   titleStyles,
 } from '@modules/questsGrid/styles';
-import { QuizCard, EmptyQuizCard } from '@components';
+import { QuestCard, EmptyQuestCard } from '@components';
 import { ROUTES } from '@constants';
 import { Quest } from '@types';
+import { fetchQuests } from '@api';
+import { mockQuests } from '@modules/questsGrid/mocks';
 
-const QuizListView = () => {
+const QuestListView = () => {
   const navigate = useNavigate();
-  const [quizzes, setQuizzes] = useState<Quest[]>([]);
+  const [quests, setQuests] = useState<Quest[]>([]);
 
   useEffect(() => {
-    const loadQuizzes = async () => {
+    const loadQuests = async () => {
       try {
-        const data = await fetchQuizzes();
-        setQuizzes(data);
+        const data = await fetchQuests();
+        setQuests(data ?? mockQuests);
       } catch (error) {
-        console.error('Failed to fetch quizzes:', error);
+        console.error('Failed to fetch quests:', error);
       }
     };
-    loadQuizzes();
+    loadQuests();
   }, []);
 
-  const handleCreateQuiz = useCallback(() => {
-    navigate(ROUTES.CREATE_QUIZ);
+  const handleCreateQuest = useCallback(() => {
+    navigate(ROUTES.CREATE_QUEST);
   }, [navigate]);
 
-  const handleOpenQuiz = useCallback(
+  const handleOpenQuest = useCallback(
     (id: number) => {
-      navigate(ROUTES.QUIZ.replace(':id', String(id)));
+      navigate(ROUTES.QUEST.replace(':id', String(id)));
     },
     [navigate]
   );
@@ -45,16 +46,16 @@ const QuizListView = () => {
       </Typography>
 
       <Box sx={boxStyles}>
-        <Box sx={quizCardStyles}>
-          <EmptyQuizCard handleCreteQuiz={handleCreateQuiz} />
+        <Box sx={questCardStyles}>
+          <EmptyQuestCard handleCreteQuest={handleCreateQuest} />
         </Box>
-        {quizzes?.map((quiz) => (
+        {quests?.map((quest) => (
           <Box
-            key={quiz?.id}
-            sx={quizCardStyles}
-            onClick={() => handleOpenQuiz(quiz.id)}
+            key={quest?.id}
+            sx={questCardStyles}
+            onClick={() => handleOpenQuest(quest.id)}
           >
-            <QuizCard quiz={quiz} />
+            <QuestCard quest={quest} />
           </Box>
         ))}
       </Box>
@@ -62,4 +63,4 @@ const QuizListView = () => {
   );
 };
 
-export default QuizListView;
+export default QuestListView;

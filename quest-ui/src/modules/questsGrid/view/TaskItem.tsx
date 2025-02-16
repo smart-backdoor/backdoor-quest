@@ -1,4 +1,5 @@
-import { Controller, useFieldArray } from 'react-hook-form';
+import { useEffect, useRef } from 'react';
+import { Control, Controller, useFieldArray } from 'react-hook-form';
 import {
   Box,
   TextField,
@@ -10,18 +11,29 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CloseIcon from '@mui/icons-material/Close';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import {
+  Delete,
+  Close,
+  AddCircleOutline,
+  AddPhotoAlternate,
+} from '@mui/icons-material';
+import { toast } from 'react-toastify';
+
+interface TaskItemProps {
+  taskIndex: number;
+  control: Control<any>;
+  onRemoveTask: () => void;
+  onFileUpload: (file: File) => void;
+  uploadedFileName?: string;
+}
 
 const TaskItem = ({
-  task,
   taskIndex,
   control,
   onRemoveTask,
   onFileUpload,
-}: any) => {
+  uploadedFileName,
+}: TaskItemProps) => {
   const {
     fields: answers,
     append: appendAnswer,
@@ -31,11 +43,30 @@ const TaskItem = ({
     name: `tasks[${taskIndex}].answers`,
   });
 
+  const prevFileNameRef = useRef<string | undefined>(null);
+
+  useEffect(() => {
+    if (uploadedFileName && uploadedFileName !== prevFileNameRef.current) {
+      toast.success(`File "${uploadedFileName}" uploaded successfully!`, {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      prevFileNameRef.current = uploadedFileName;
+    }
+  }, [uploadedFileName]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      onFileUpload(file);
+    }
+  };
+
   return (
     <Paper
       sx={{
         p: 3,
-        mb: 3,
+        marginBottom: 3,
         borderRadius: 3,
         boxShadow: 2,
         position: 'relative',
@@ -51,10 +82,15 @@ const TaskItem = ({
         }}
         aria-label="delete task"
       >
-        <DeleteIcon />
+        <Delete />
       </IconButton>
 
-      <Typography variant="h6" fontWeight="bold" mb={2} color="text.primary">
+      <Typography
+        variant="h6"
+        fontWeight="bold"
+        marginBottom={2}
+        color="text.primary"
+      >
         Task {taskIndex + 1}
       </Typography>
 
@@ -69,7 +105,7 @@ const TaskItem = ({
             helperText={fieldState?.error?.message}
             label="Task title"
             sx={{
-              mb: 2,
+              marginBottom: 2,
               backgroundColor: 'background.paper',
               borderRadius: 2,
             }}
@@ -77,28 +113,24 @@ const TaskItem = ({
         )}
       />
 
-      <Stack direction="row" alignItems="center" spacing={2} mb={3}>
+      <Stack direction="row" alignItems="center" spacing={2} marginBottom={3}>
         <IconButton component="label" color="primary">
-          <input
-            type="file"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files?.[0] || '';
-              if (file) {
-                onFileUpload(file);
-              }
-            }}
-          />
-          <AddPhotoAlternateIcon />
+          <input type="file" hidden onChange={handleFileChange} />
+          <AddPhotoAlternate />
         </IconButton>
-        {task.file && (
+        {uploadedFileName && (
           <Typography variant="body2" color="text.secondary">
-            {task.file.name}
+            {uploadedFileName}
           </Typography>
         )}
       </Stack>
 
-      <Typography variant="h6" fontWeight="bold" mb={2} color="text.primary">
+      <Typography
+        variant="h6"
+        fontWeight="bold"
+        marginBottom={2}
+        color="text.primary"
+      >
         Answers:
       </Typography>
 
@@ -109,7 +141,7 @@ const TaskItem = ({
             display: 'flex',
             alignItems: 'center',
             gap: 2,
-            mb: 2,
+            marginBottom: 2,
           }}
         >
           <Controller
@@ -148,31 +180,25 @@ const TaskItem = ({
             onClick={() => removeAnswer(answerIndex)}
             aria-label="delete answer"
           >
-            <CloseIcon />
+            <Close />
           </IconButton>
         </Box>
       ))}
 
-      <Button
-        onClick={() => appendAnswer({ title: '', isCorrect: false })}
-        fullWidth
-        variant="outlined"
-        sx={{
-          mb: 2,
-          borderRadius: 2,
-          textTransform: 'none',
-          fontWeight: 'bold',
-          color: 'primary.main',
-          borderColor: 'primary.main',
-          '&:hover': {
-            backgroundColor: 'action.hover',
-            borderColor: 'primary.dark',
-          },
-        }}
-        startIcon={<AddCircleOutlineIcon />}
-      >
-        Add Answer
-      </Button>
+      <Box sx={{ textAlign: 'center' }}>
+        <IconButton
+          disableRipple
+          onClick={() => appendAnswer({ title: '', isCorrect: false })}
+          sx={{
+            fontWeight: '700',
+            color: 'primary.main',
+            fontSize: '1rem',
+          }}
+        >
+          <AddCircleOutline sx={{ marginRight: 1 }} />
+          Add Answer
+        </IconButton>
+      </Box>
     </Paper>
   );
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mui/material';
 import { Questions } from '@assets/images';
 import Header from '@layout/MainLayout/components/Header';

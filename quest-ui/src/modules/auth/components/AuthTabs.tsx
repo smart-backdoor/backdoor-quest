@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Paper } from '@mui/material';
 import LoginForm from '@modules/auth/view/LoginForm';
 import RegisterForm from '@modules/auth/view/RegisterForm';
@@ -23,7 +23,7 @@ const AuthTabs: React.FC = () => {
           display: 'flex',
           justifyContent: 'center',
           gap: 2,
-          mb: 3,
+          marginBottom: 3,
         }}
       >
         <Button
@@ -31,8 +31,8 @@ const AuthTabs: React.FC = () => {
           sx={{
             fontWeight: 'bold',
             color: tabIndex === 0 ? '#4257b2' : '#2d2d2d',
-            borderBottom: tabIndex === 0 ? '2px solid #4257b2' : 'none',
             fontSize: '1.2rem',
+            ...(tabIndex === 0 && { borderBottom: '2px solid #4257b2' }),
           }}
         >
           Login
@@ -42,15 +42,15 @@ const AuthTabs: React.FC = () => {
           sx={{
             fontWeight: 'bold',
             color: tabIndex === 1 ? '#4257b2' : '#2d2d2d',
-            borderBottom: tabIndex === 1 ? '2px solid #4257b2' : 'none',
             fontSize: '1.2rem',
+            ...(tabIndex === 1 && { borderBottom: '2px solid #4257b2' }),
           }}
         >
           Registration
         </Button>
       </Box>
 
-      <Box sx={{ mt: 3 }}>
+      <Box sx={{ marginTop: 3 }}>
         {tabIndex === 0 && <LoginForm />}
         {tabIndex === 1 && <RegisterForm />}
       </Box>

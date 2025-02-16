@@ -2,17 +2,14 @@ import {
   Card,
   CardHeader,
   CardMedia,
-  CardContent,
   Avatar,
   Stack,
-  Typography,
   Chip,
 } from '@mui/material';
-import { Quest } from '@types';
 
-const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
+const QuestCard: React.FC<{ quest: any }> = ({ quest }) => {
   const { title, mark, quantityOfTasks, file, authorName, authorAvatar, rate } =
-    quiz;
+    quest;
 
   return (
     <Card
@@ -55,4 +52,4 @@ const QuizCard: React.FC<{ quiz: Quest }> = ({ quiz }) => {
   );
 };
 
-export default QuizCard;
+export default QuestCard;

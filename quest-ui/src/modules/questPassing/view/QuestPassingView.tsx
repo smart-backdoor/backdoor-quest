@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -12,103 +11,30 @@ import {
   Modal,
   IconButton,
 } from '@mui/material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import CloseIcon from '@mui/icons-material/Close';
-import {
-  fetchQuestions,
-  submitQuestion,
-} from '@modules/quizPassing/controller/QuestPassingController';
-import { StartQuest } from '@types';
-import { ROUTES } from '@constants/routes';
-import { onQuestComplete } from '@api';
-import StarIcon from '@mui/icons-material/Star';
+import { Close, Star } from '@mui/icons-material';
+import { useQuestPassingController } from '@modules/questPassing/controller/QuestPassingController';
 
 const QuestPassingView = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-
-  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
-  const [isFinished, setIsFinished] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [quest, setQuest] = useState<StartQuest | null>(null);
-  const [score, setScore] = useState(0);
-  const [rate, setRate] = useState<number | null>(null);
-  const [correctAnswers, setCorrectAnswers] = useState<boolean[]>([]);
+  const {
+    quest,
+    isFinished,
+    isModalOpen,
+    currentTaskIndex,
+    selectedAnswers,
+    score,
+    rate,
+    progress,
+    handleAnswerSelect,
+    handleNextTask,
+    handleComplete,
+    handleCloseModal,
+    setRate,
+    loadQuest,
+  } = useQuestPassingController();
 
   useEffect(() => {
-    const loadQuest = async () => {
-      try {
-        if (id) {
-          const data = await fetchQuestions(id);
-          setQuest(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch quest:', error);
-      }
-    };
     loadQuest();
-  }, [id]);
-
-  const handleAnswerSelect = (answerId: number) => {
-    setSelectedAnswers((prev) =>
-      prev.includes(answerId)
-        ? prev.filter((id) => id !== answerId)
-        : [...prev, answerId]
-    );
-  };
-
-  const handleNextTask = async () => {
-    if (quest && id) {
-      try {
-        const nextTaskIndex = currentTaskIndex + 1;
-        const isLastTask = quest.total === nextTaskIndex;
-
-        const payload = {
-          taskId: quest.currentTask.id,
-          answerId: selectedAnswers[0],
-          nextTaskIndex: isLastTask ? null : nextTaskIndex,
-        };
-
-        const response = await submitQuestion(id, payload);
-
-        setCorrectAnswers(response.correctAnswers);
-        if (response.correctAnswers.includes(true)) {
-          setScore((prev) => prev + 1);
-        }
-
-        if (response.nextTask) {
-          setQuest((prev) => ({ ...prev!, currentTask: response.nextTask }));
-          setCurrentTaskIndex(nextTaskIndex);
-          setSelectedAnswers([]);
-        } else {
-          setIsFinished(true);
-        }
-      } catch (error) {
-        console.error('Failed to submit answer:', error);
-      }
-    }
-  };
-
-  const handleComplete = async () => {
-    if (id && rate !== null) {
-      const payload = { correctAnswers, rate };
-      try {
-        await onQuestComplete(id, payload);
-        setIsModalOpen(false);
-        navigate(ROUTES.ROOT);
-      } catch (error) {
-        console.error('Failed to complete quest:', error);
-      }
-    }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    navigate(ROUTES.ROOT);
-  };
-
-  const progress = quest ? (currentTaskIndex / quest.total) * 100 : 0;
+  }, [loadQuest]);
 
   if (!quest) {
     return <div>Loading...</div>;
@@ -125,7 +51,7 @@ const QuestPassingView = () => {
           bgcolor: 'rgba(255, 255, 255, 0.9)',
           borderRadius: 4,
           boxShadow: 24,
-          p: 4,
+          padding: 4,
           outline: 'none',
         }}
       >
@@ -133,9 +59,14 @@ const QuestPassingView = () => {
           sx={{ position: 'absolute', top: 16, right: 16 }}
           onClick={handleCloseModal}
         >
-          <CloseIcon />
+          <Close />
         </IconButton>
-        <Typography variant="h4" fontWeight="bold" mb={2} textAlign="center">
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          marginBottom={2}
+          textAlign="center"
+        >
           Quest {quest.questId}
         </Typography>
 
@@ -144,15 +75,22 @@ const QuestPassingView = () => {
             <LinearProgress
               variant="determinate"
               value={progress}
-              sx={{ height: 8, borderRadius: 5, mb: 3 }}
+              sx={{ height: 8, borderRadius: 5, marginBottom: 3 }}
             />
             <Stack direction="row" alignItems="center">
-              <Typography variant="h6" fontWeight="bold" mb={2}>
+              <Typography variant="h6" fontWeight="bold" marginBottom={2}>
                 Task {currentTaskIndex + 1} of {quest.total}
               </Typography>
             </Stack>
 
-            <Paper sx={{ p: 3, mb: 3, borderRadius: 3, boxShadow: 2 }}>
+            <Paper
+              sx={{
+                padding: 3,
+                marginBottom: 3,
+                borderRadius: 3,
+                boxShadow: 2,
+              }}
+            >
               <Typography variant="h6" fontWeight="bold" mb={2}>
                 {quest.currentTask.title}
               </Typography>
@@ -169,8 +107,8 @@ const QuestPassingView = () => {
                     key={answer.id}
                     control={
                       <Checkbox
-                        checked={selectedAnswers.includes(answer.id)}
-                        onChange={() => handleAnswerSelect(answer.id)}
+                        checked={selectedAnswers.includes(Number(answer?.id))}
+                        onChange={() => handleAnswerSelect(Number(answer.id))}
                         sx={{
                           color: '#4257b2',
                           '&.Mui-checked': {
@@ -182,10 +120,10 @@ const QuestPassingView = () => {
                     label={answer.title}
                     sx={{
                       borderRadius: 2,
-                      bgcolor: selectedAnswers.includes(answer.id)
+                      bgcolor: selectedAnswers.includes(Number(answer.id))
                         ? '#e8eaf6'
                         : 'transparent',
-                      p: 1,
+                      padding: 1,
                       transition: 'background-color 0.3s',
                       '&:hover': {
                         bgcolor: '#e8eaf6',
@@ -221,7 +159,7 @@ const QuestPassingView = () => {
             <Box>
               {[1, 2, 3, 4, 5].map((star) => (
                 <IconButton key={star} onClick={() => setRate(star)}>
-                  <StarIcon
+                  <Star
                     sx={{ color: star <= (rate || 0) ? '#FFD700' : '#ccc' }}
                   />
                 </IconButton>

@@ -8,12 +8,11 @@ import Theme from './src/theme';
 import ProfileView from './src/modules/profile/view/ProfileView';
 import QuestGridView from './src/modules/questsGrid/view/QuestGridView';
 import CreateQuestController from './src/modules/questsGrid/controller/CreateQuestController';
-import QuizPassingView from './src/modules/quizPassing/view/QuestPassingView';
+import QuestPassingView from './src/modules/questPassing/view/QuestPassingView';
 import { ToastContainer } from 'react-toastify';
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
 const App: React.FC = () => {
-
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
@@ -36,7 +35,7 @@ const App: React.FC = () => {
             }
           />
           <Route
-            path={ROUTES.CREATE_QUIZ}
+            path={ROUTES.CREATE_QUEST}
             element={
               <MainLayout>
                 <CreateQuestController />
@@ -44,10 +43,10 @@ const App: React.FC = () => {
             }
           />
           <Route
-            path={ROUTES.QUIZ}
+            path={ROUTES.QUEST}
             element={
               <MainLayout>
-                <QuizPassingView />
+                <QuestPassingView />
               </MainLayout>
             }
           />

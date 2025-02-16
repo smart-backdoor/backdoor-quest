@@ -1,5 +1,5 @@
 type Answer = {
-  id: number;
+  id?: number;
   title: string;
 };
 
@@ -31,10 +31,10 @@ export type AuthData = {
 export type UserProfile = {
   name: string;
   email: string;
-  photo: string | null;
+  avatar: string | null;
 };
 
-export type PassedQuiz = {
+export type PassedQuests = {
   id: string;
   title: string;
   description: string;
@@ -48,7 +48,7 @@ export type PassedQuiz = {
   };
 };
 
-export type MyQuiz = {
+export type MyQuest = {
   id: string;
   title: string;
   description: string;
@@ -69,7 +69,7 @@ export type Quest = {
   };
 };
 
-export interface CreateQuizRequest {
+export interface CreateQuestRequest {
   title: string;
   description: string;
   timeLimit: number;
@@ -81,7 +81,7 @@ export interface CreateQuizRequest {
   }[];
 }
 
-export interface CreateQuizResponse {
+export interface CreateQuestResponse {
   id: string;
   title: string;
   description: string;
@@ -104,7 +104,7 @@ export type TaskResponse = {
   correctAnswers: boolean[];
 };
 
-interface CompletedQuest {
+export interface CompletedQuest {
   id: number;
   title: string;
   mark: number | null;

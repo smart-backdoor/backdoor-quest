@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box, Card, Typography } from '@mui/material';
+import { User } from '@types';
 
 const cardStyle = {
   padding: 2,
@@ -12,7 +12,7 @@ const cardStyle = {
   width: 150,
 };
 
-const ProfileStatistics: React.FC = ({ userData }) => {
+const ProfileStatistics = ({ userData }: { userData: User }) => {
   return (
     <Box sx={{ marginBottom: 4, textAlign: 'center' }}>
       <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -37,7 +37,7 @@ const ProfileStatistics: React.FC = ({ userData }) => {
         </Card>
         <Card sx={cardStyle}>
           <Typography sx={{ fontWeight: '600', fontSize: '1rem' }}>
-            Passed Quizzes
+            Passed Quests
           </Typography>
           <Typography variant="h4" fontWeight="bold">
             {userData.completed.length}

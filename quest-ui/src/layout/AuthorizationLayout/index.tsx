@@ -1,7 +1,6 @@
-import React from 'react';
 import { Box } from '@mui/material';
 import AuthTabs from '@modules/auth/components/AuthTabs';
-import { Questions } from '@assets/images';
+import { Logo, Questions, Text } from '@assets/images';
 
 const AuthorizationLayout: React.FC = () => {
   return (
@@ -46,6 +45,19 @@ const AuthorizationLayout: React.FC = () => {
             boxShadow: '0 0.25rem 1.5rem rgba(0, 0, 0, 0.1)',
           }}
         >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderBottom: '1px solid #D3D3D3',
+              marginBottom: 2,
+              paddingBottom: 2,
+            }}
+          >
+            <img src={Logo} alt="App Logo" style={{ height: 60 }} />
+            <img src={Text} alt="App Text" style={{ height: 50 }} />
+          </Box>
           <AuthTabs />
         </Box>
       </Box>

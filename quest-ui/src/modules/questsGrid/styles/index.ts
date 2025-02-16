@@ -13,7 +13,7 @@ export const boxStyles = {
   gap: 3,
 };
 
-export const quizCardStyles = {
+export const questCardStyles = {
   width: { xs: '100%', sm: '48%', md: '30%' },
   cursor: 'pointer',
 };

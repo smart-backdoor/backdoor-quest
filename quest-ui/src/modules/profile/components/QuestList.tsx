@@ -1,14 +1,13 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { Quest } from '@types';
-import QuizCard from '@modules/profile/components/QuizCard';
+import { CompletedQuest, Quest } from '@types';
+import QuestCard from '@modules/profile/components/QuestCard';
 
-type QuizListProps = {
-  quizzes: Quest[];
+type QuestsListProps = {
+  quests: Quest[] | CompletedQuest[];
   emptyMessage: string;
 };
 
-const QuizList: React.FC<QuizListProps> = ({ quizzes, emptyMessage }) => {
+const QuestList: React.FC<QuestsListProps> = ({ quests, emptyMessage }) => {
   return (
     <Box
       sx={{
@@ -19,8 +18,8 @@ const QuizList: React.FC<QuizListProps> = ({ quizzes, emptyMessage }) => {
         padding: 2,
       }}
     >
-      {quizzes?.length > 0 ? (
-        quizzes.map((quiz) => <QuizCard key={quiz.id} quiz={quiz} />)
+      {quests?.length > 0 ? (
+        quests.map((quest) => <QuestCard key={quest.id} quest={quest} />)
       ) : (
         <Typography variant="body1" color="textSecondary">
           {emptyMessage}
@@ -30,4 +29,4 @@ const QuizList: React.FC<QuizListProps> = ({ quizzes, emptyMessage }) => {
   );
 };
 
-export default QuizList;
+export default QuestList;

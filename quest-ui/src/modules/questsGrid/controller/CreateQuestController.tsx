@@ -1,11 +1,11 @@
-import { createQuiz } from '@modules/questsGrid/controller/QuestsGridController';
+import { toast } from 'react-toastify';
 import { useFormWithContext } from '@hooks/useFormWithContext';
 import {
   ValidationSchema,
   validationSchema,
 } from '@modules/questsGrid/model/validation.model';
-import CreateQuizView from '@modules/questsGrid/view/CreateQuestView';
-import { toast } from 'react-toastify';
+import CreateQuestView from '@modules/questsGrid/view/CreateQuestView';
+import { createQuest } from '@api';
 
 const initialValues = {
   title: '',
@@ -19,7 +19,7 @@ const initialValues = {
   })),
 };
 
-const CreateQuizController = () => {
+const CreateQuestController = () => {
   const { renderFormWithContext } = useFormWithContext({
     defaultValues: initialValues,
     mode: 'onChange',
@@ -40,7 +40,7 @@ const CreateQuizController = () => {
         })),
       };
 
-      await createQuiz(payload);
+      await createQuest(payload);
       toast.success('Quest successfully created!');
     } catch (error) {
       toast.error('Unable to process your request. Please try again');
@@ -49,9 +49,9 @@ const CreateQuizController = () => {
   };
 
   return renderFormWithContext<ValidationSchema>({
-    children: <CreateQuizView />,
+    children: <CreateQuestView />,
     onSubmit: handleSubmit,
   });
 };
 
-export default CreateQuizController;
+export default CreateQuestController;

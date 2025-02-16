@@ -1,13 +1,13 @@
-import React from 'react';
+import Cookies from 'js-cookie';
 import { Box } from '@mui/material';
 import { ExitToApp, ListAlt, Person } from '@mui/icons-material';
 import { Logo, Text } from '@assets/images';
 import NavItem from '@layout/MainLayout/components/NavItem';
-import Cookies from "js-cookie";
-import {ROUTES} from "@constants";
+import { ROUTES } from '@constants';
 
 const Header: React.FC = () => {
   const userId = String(Cookies.get('userId'));
+
   return (
     <Box
       sx={{
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
         />
         {userId ? (
           <NavItem
-            to= {ROUTES.PROFILE.replace(':id', userId)}
+            to={ROUTES.PROFILE.replace(':id', userId)}
             label="Profile"
             icon={<Person />}
             active={location.pathname === ROUTES.PROFILE.replace(':id', userId)}

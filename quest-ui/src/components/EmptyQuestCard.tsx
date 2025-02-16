@@ -1,14 +1,14 @@
 import { Card, IconButton } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-const EmptyQuizCard = ({
-  handleCreteQuiz,
+const EmptyQuestCard = ({
+  handleCreteQuest,
 }: {
-  handleCreteQuiz: () => void;
+  handleCreteQuest: () => void;
 }) => {
   return (
     <Card
-      onClick={handleCreteQuiz}
+      onClick={handleCreteQuest}
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -37,4 +37,4 @@ const EmptyQuizCard = ({
   );
 };
 
-export default EmptyQuizCard;
+export default EmptyQuestCard;

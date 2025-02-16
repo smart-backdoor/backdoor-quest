@@ -1,17 +1,12 @@
-import {
-  Controller,
-  useFieldArray,
-  useFormContext,
-  useWatch,
-} from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { Box, TextField, Button, Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import CreateQuizButton from '@components/CreateQuizButton';
+import CreateQuestButton from '@components/CreateQuestButton';
 import { ValidationSchema } from '@modules/questsGrid/model/validation.model';
-import { useState } from 'react';
 import TaskItem from '@modules/questsGrid/view/TaskItem';
 
-const CreateQuizView = () => {
+const CreateQuestView = () => {
   const [uploadedFiles, setUploadedFiles] = useState<Record<string, File>>({});
   const {
     control,
@@ -56,8 +51,13 @@ const CreateQuizView = () => {
       borderRadius={4}
       bgcolor="background.paper"
     >
-      <Typography variant="h4" fontWeight="bold" mb={3} textAlign="center">
-        Create Quiz
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        marginBottom={3}
+        textAlign="center"
+      >
+        Create Quest
       </Typography>
 
       <Controller
@@ -72,7 +72,7 @@ const CreateQuizView = () => {
             helperText={fieldState?.error?.message}
             label="Title"
             sx={{
-              mb: 3,
+              marginBottom: 3,
               borderRadius: 2,
             }}
           />
@@ -91,7 +91,7 @@ const CreateQuizView = () => {
             label="Description"
             multiline
             sx={{
-              mb: 3,
+              marginBottom: 3,
               borderRadius: 2,
             }}
           />
@@ -110,8 +110,13 @@ const CreateQuizView = () => {
             label="Time limit (min)"
             type="number"
             onChange={(e) => field.onChange(Number(e.target.value))}
+            onKeyDown={(e) => {
+              if (e.key === '-' || e.key === 'e') {
+                e.preventDefault();
+              }
+            }}
             sx={{
-              mb: 4,
+              marginBottom: 4,
               borderRadius: 2,
             }}
           />
@@ -119,28 +124,30 @@ const CreateQuizView = () => {
       />
 
       {tasks.map((task, taskIndex) => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          taskIndex={taskIndex}
-          control={control}
-          onRemoveTask={() => handleRemoveTask(taskIndex)}
-          onFileUpload={(file) => handleFileUpload(taskIndex, file)}
-        />
+        <Box key={task.id} mb={3}>
+          <TaskItem
+            taskIndex={taskIndex}
+            control={control}
+            onRemoveTask={() => handleRemoveTask(taskIndex)}
+            onFileUpload={(file: File) => handleFileUpload(taskIndex, file)}
+            uploadedFileName={uploadedFiles[`task-${taskIndex}`]?.name}
+          />
+        </Box>
       ))}
 
-      <Box textAlign="center" mt={4}>
+      <Box textAlign="center" marginTop={4}>
         <Button
           onClick={handleAddTask}
           fullWidth
-          variant="contained"
+          variant="outlined"
           sx={{
             borderRadius: 2,
-            textTransform: 'none',
-            fontWeight: 'bold',
-            py: 1.5,
-            backgroundColor: 'primary.main',
-            '&:hover': { backgroundColor: 'primary.dark' },
+            borderWidth: 1.5,
+            paddingY: 1.5,
+            borderColor: '#4257b2',
+            color: '#4257b2',
+            fontWeight: '700',
+            fontSize: '1rem',
           }}
           startIcon={<AddCircleOutlineIcon />}
         >
@@ -148,11 +155,11 @@ const CreateQuizView = () => {
         </Button>
       </Box>
 
-      <Box textAlign="center" mt={4}>
-        <CreateQuizButton disabled={!isDirty || !isValid} />
+      <Box textAlign="center" marginTop={4}>
+        <CreateQuestButton disabled={!isDirty || !isValid} />
       </Box>
     </Box>
   );
 };
 
-export default CreateQuizView;
+export default CreateQuestView;

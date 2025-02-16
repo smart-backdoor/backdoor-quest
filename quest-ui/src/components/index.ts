@@ -1,5 +1,5 @@
-import QuizCard from '@components/QuizCard';
-import EmptyQuizCard from '@components/EmptyQuizCard';
-import CreateQuizButton from '@components/CreateQuizButton';
+import QuestCard from '@components/QuestCard';
+import EmptyQuestCard from '@components/EmptyQuestCard';
+import CreateQuestButton from '@components/CreateQuestButton';
 
-export { QuizCard, EmptyQuizCard, CreateQuizButton };
+export { QuestCard, EmptyQuestCard, CreateQuestButton };

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import { MyQuiz, Quest } from '@types';
-import QuizList from '@modules/profile/components/QuizList';
+import { MyQuest, Quest } from '@types';
+import QuestList from '@modules/profile/components/QuestList';
 
 type ProfileTabsProps = {
-  passedQuizzes: Quest[];
-  myQuizzes: MyQuiz[];
+  passedQuests: Quest[];
+  myQuests: MyQuest[];
 };
 
 const tabButtonStyle = (isActive: boolean) => ({
@@ -16,8 +16,8 @@ const tabButtonStyle = (isActive: boolean) => ({
 });
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({
-  passedQuizzes,
-  myQuizzes,
+  passedQuests,
+  myQuests,
 }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -32,24 +32,24 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({
           onClick={() => handleTabChange(0)}
           sx={tabButtonStyle(tabIndex === 0)}
         >
-          Passed Quiz
+          Passed Quests
         </Button>
         <Button
           onClick={() => handleTabChange(1)}
           sx={tabButtonStyle(tabIndex === 1)}
         >
-          My Quiz
+          My Quests
         </Button>
       </Stack>
 
       <Box sx={{ mt: 3 }}>
         {tabIndex === 0 ? (
-          <QuizList
-            quizzes={passedQuizzes}
-            emptyMessage="No quiz have been passed yet."
+          <QuestList
+            quests={passedQuests}
+            emptyMessage="No quests have been passed yet."
           />
         ) : (
-          <QuizList quizzes={myQuizzes} emptyMessage="No quiz created yet." />
+          <QuestList quests={myQuests} emptyMessage="No quests created yet." />
         )}
       </Box>
     </Box>
